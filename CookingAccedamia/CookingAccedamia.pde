@@ -1,4 +1,6 @@
 import g4p_controls.*;
+String selectedAppliance = "";
+
 void setup(){
   surface.setResizable(true);
   size(800,600);
