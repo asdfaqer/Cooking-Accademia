@@ -1,5 +1,6 @@
 import g4p_controls.*;
 String selectedAppliance = "";
+int ovenstemperaure = 50;
 
 void setup(){
   surface.setResizable(true);

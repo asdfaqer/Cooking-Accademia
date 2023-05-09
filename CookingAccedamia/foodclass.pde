@@ -22,32 +22,6 @@ class Food{
     return label;
   }
   
-  void heatupoven(int temperature){
-      
-  }
-  
-  void turnonandoffoven(){
-    
-  }
-  
-  void stir(){
-  
-  
-  }
-  
-  
-  
- 
-  
-  
-  
 
   
-  
-  
-  
-  
-  
-
-
 }
