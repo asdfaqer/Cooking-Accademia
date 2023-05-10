@@ -1,12 +1,15 @@
 import g4p_controls.*;
 String selectedAppliance = "";
 int ovenstemperaure = 50;
+PImage oven;
 
 void setup(){
   surface.setResizable(true);
   size(800,600);
+  oven = loadImage("closeoven2.jpeg");
 }
 void draw(){
+ 
   if(!button_pressed){
     create_start_button();
   }
