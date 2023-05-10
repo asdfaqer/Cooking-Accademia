@@ -21,7 +21,4 @@ class Food{
     label += "Sugar" + this.sugar + "g \n";
     return label;
   }
-  
-
-  
 }
