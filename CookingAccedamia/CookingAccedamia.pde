@@ -6,9 +6,10 @@ PImage oven;
 void setup(){
   surface.setResizable(true);
   size(800,600);
-  oven = loadImage("closeoven2.jpeg");
+  oven = loadImage("openoven.png");
 }
 void draw(){
+  
  
   if(!button_pressed){
     create_start_button();
@@ -19,6 +20,7 @@ void draw(){
      textAlign(CENTER);
      text("display not in use", width/2, height/2);
      println("pressed");
+     drawoven();
   }
 }
 boolean button_pressed = false;

@@ -21,4 +21,10 @@ class Food{
     label += "Sugar" + this.sugar + "g \n";
     return label;
   }
+  
+  void drawlabel(){
+    size(200,200);
+    text(nutritionalLabel(),200,300);
+  }
+  
 }

@@ -1,4 +1,4 @@
 void drawoven(){
-   image(oven,100,100);
-
+   image(oven,100,10,300,300);
+  
 }
