@@ -19,7 +19,7 @@ void draw(){
      textSize(50);
      textAlign(CENTER);
      text("display not in use", width/2, height/2);
-     println("pressed");
+     //println("pressed");
      drawoven();
   }
 }
