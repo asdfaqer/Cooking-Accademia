@@ -37,9 +37,13 @@ public void dropList1_click1(GDropList source, GEvent event) { //_CODE_:dropList
   println(ingredients_selected);
   println("dropList1 - GDropList >> GEvent." + event + " @ " + millis());
 } //_CODE_:dropList1:693695:
+ArrayList<Float> quantities_values = new ArrayList<Float>();
 public void change_quantities(GCustomSlider source, GEvent event){
-  
-  
+  quantities_values.clear();
+  for( int j = 0; j <= i; j++){
+    quantities_values.add(ingredient_quantities.get(j).getValueF());
+  }
+  println(quantities_values);
 }
 public void button1_click1(GButton source, GEvent event) { //_CODE_:button1:254614:
   i++;
