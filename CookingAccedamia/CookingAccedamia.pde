@@ -9,7 +9,7 @@ void setup(){
   oven = loadImage("openoven.png");
 }
 void draw(){
-  
+  print();
  
   if(!button_pressed){
     create_start_button();
