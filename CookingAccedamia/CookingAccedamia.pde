@@ -1,12 +1,18 @@
+import processing.sound.*;
 import g4p_controls.*;
 String selectedAppliance = "";
 int ovenstemperaure = 50;
+boolean button_pressed = false;
 PImage oven;
-
+SoundFile Song;
 void setup(){
-  surface.setResizable(true);
   size(800,600);
+  surface.setResizable(true);
   oven = loadImage("openoven.png");
+  //SongImage = loadImage ("Cool Out Son Image");
+  
+  Song = new SoundFile(this, "a.wav");
+  Song.play();
 }
 void draw(){
   print();
@@ -23,7 +29,6 @@ void draw(){
      drawoven();
   }
 }
-boolean button_pressed = false;
 int x, y;
 void create_start_button(){
   x=240;
