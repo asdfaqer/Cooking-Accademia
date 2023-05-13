@@ -7,6 +7,7 @@ PImage oven;
 SoundFile Song;
 void setup(){
   size(800,600);
+  print();
   surface.setResizable(true);
   oven = loadImage("openoven.png");
   //SongImage = loadImage ("Cool Out Son Image");
