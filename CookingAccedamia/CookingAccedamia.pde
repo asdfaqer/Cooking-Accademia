@@ -6,6 +6,7 @@ String selectedAppliance = "";
 int ovenstemperaure = 50;
 boolean button_pressed = false;
 PImage oven;
+PImage cooklo;
 SoundFile Song;
 boolean cooking_mode = false;
 ArrayList<String> instructions = new ArrayList<String>();
@@ -14,12 +15,16 @@ void setup(){
   size(800,600);
   surface.setResizable(true);
   oven = loadImage("openoven.png");
+  cooklo = loadImage("cooklogo.png");
+   
   //SongImage = loadImage ("Cool Out Son Image");
   
   Song = new SoundFile(this, "a.wav");
   Song.play();
   
   create_start_button();
+  
+  
 }
 boolean scene_setup = false;
 String cur_instruction;
@@ -52,6 +57,9 @@ void draw(){
       scene_setup = true;
     }
     image(oven,0,0,width,height);
+    
+    
+    
     if(cur_instruction.substring(5,10).equals("heat ")){
       target_temp = int(cur_instruction.substring(13, cur_instruction.indexOf("C")-1));
     }
@@ -121,9 +129,12 @@ void set_up_scene(){
   }
 }
 void create_start_button(){
+  image(cooklo,0,0,width,height);
   start_button = new GButton(this, width/2 - 150, height*3/4, 300, 100);
   start_button.setText("Start");
   start_button.addEventHandler(this, "start_button");
+  
+  
 }
 GButton start_button;
 GLabel cur_instruction_label;
@@ -131,9 +142,11 @@ GLabel task_receipe_completion;
 GLabel timer;
 GLabel tempature;
 public void start_button(GButton source, GEvent event){
+  
   start_button.setAlpha(0);
   start_button.dispose();
   start_button = null;
   background(0);
-   createGUI();
+  createGUI();
+   
 }
