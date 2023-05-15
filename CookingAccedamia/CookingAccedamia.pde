@@ -6,6 +6,8 @@ boolean button_pressed = false;
 PImage oven;
 SoundFile Song;
 boolean cooking_mode = false;
+ArrayList<String> instructions = new ArrayList<String>();
+
 void setup(){
   size(800,600);
   surface.setResizable(true);
@@ -17,10 +19,37 @@ void setup(){
   
   create_start_button();
 }
+boolean scene_setup = false;
+String cur_instruction;
 void draw(){
+  cooking_mode = false;
+  try{
+    cur_instruction = instructions.get(step_num-1);
+    //find scene
+    if (cur_instruction.substring(0,5).equals("oven ")){
+      cooking_mode = true;
+    }
+    if(scene_setup){
+      background(0);
+      cur_instruction_label.setText(cur_instruction);
+    }
+  }
+  catch(Exception e){
+    
+  }
+  //set up scene
   if(cooking_mode){
+    if(!scene_setup){
+      set_up_scene();
+      scene_setup = true;
+    }
     image(oven,0,0,width,height);
-    set_up_scene();
+    if(cur_instruction.substring(5,10).equals("heat ")){
+      target_temp = int(cur_instruction.substring(13, cur_instruction.indexOf("C")-1));
+    }
+    if(cur_instruction.substring(5,10).equals("cook ")){
+      target_time = int(cur_instruction.substring(14, cur_instruction.indexOf("m")-1));
+    }
   }
 }
 void set_up_scene(){
@@ -61,6 +90,10 @@ void set_up_scene(){
     timelabel.setText("Time");
     timelabel.setLocalColorScheme(GCScheme.ORANGE_SCHEME);
     timelabel.setOpaque(false);
+    cur_instruction_label = new GLabel(this, 0, 0, 100, 100);
+    cur_instruction_label.setTextAlign(GAlign.CENTER, GAlign.MIDDLE);
+    cur_instruction_label.setOpaque(false);
+    cur_instruction_label.setLocalColorScheme(GCScheme.ORANGE_SCHEME);
   }
 }
 void create_start_button(){
@@ -69,6 +102,7 @@ void create_start_button(){
   start_button.addEventHandler(this, "start_button");
 }
 GButton start_button;
+GLabel cur_instruction_label;
 public void start_button(GButton source, GEvent event){
      background(0);
      surface.setSize(500,500);
