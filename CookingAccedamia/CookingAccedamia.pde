@@ -1,6 +1,7 @@
 import processing.sound.*;
 import g4p_controls.*;
 import java.awt.*;
+Receipe cooked_sausages = new Receipe(0,0,0,0,0,0,1);
 String selectedAppliance = "";
 int ovenstemperaure = 50;
 boolean button_pressed = false;
@@ -38,7 +39,7 @@ void draw(){
     }  
     if(scene_setup){
       background(0);
-      cur_instruction_label.setText(cur_instruction);
+      cur_instruction_label.setText("STEP #" + str(step_num) + ":\n" + cur_instruction.substring(5,cur_instruction.length()));
     }
   }
   catch(Exception e){
@@ -70,7 +71,7 @@ void set_up_scene(){
     Temp.setIncludeOverBezel(false);
     Temp.setShowTrack(true);
     Temp.setTurnMode(GKnob.CTRL_ANGULAR);
-    Temp.setLimits(100.0, 0.0, 300.0);
+    Temp.setLimits(0.0, 0.0, 300.0);
     Temp.setShowTicks(true);
     Temp.setOpaque(false);
     Temp.addEventHandler(this, "changeoventemp");
@@ -79,6 +80,11 @@ void set_up_scene(){
     ovenstemp.setText("Temp");
     ovenstemp.setLocalColorScheme(GCScheme.ORANGE_SCHEME);
     ovenstemp.setOpaque(false);
+    tempature = new GLabel(this, 170, 60, 80 ,20);
+    tempature.setTextAlign(GAlign.CENTER, GAlign.MIDDLE);
+    tempature.setText("0 C");
+    tempature.setLocalColorScheme(GCScheme.YELLOW_SCHEME);
+    tempature.setOpaque(false);
     time = new GKnob(this, 294, 39, 60, 60, 0.8);
     time.setTurnRange(110, 70);
     time.setTurnMode(GKnob.CTRL_HORIZONTAL);
@@ -97,10 +103,16 @@ void set_up_scene(){
     timelabel.setText("Time");
     timelabel.setLocalColorScheme(GCScheme.ORANGE_SCHEME);
     timelabel.setOpaque(false);
-    cur_instruction_label = new GLabel(this, 0, 0, 100, 100);
+    timer = new GLabel(this, 226, 58, 80, 20);
+    timer.setTextAlign(GAlign.CENTER, GAlign.MIDDLE);
+    timer.setText("0 min");
+    timer.setLocalColorScheme(GCScheme.YELLOW_SCHEME);
+    timer.setOpaque(false);
+    cur_instruction_label = new GLabel(this, width-300, 50, 300, 100);
     cur_instruction_label.setTextAlign(GAlign.CENTER, GAlign.MIDDLE);
     cur_instruction_label.setOpaque(false);
-    cur_instruction_label.setLocalColorScheme(GCScheme.ORANGE_SCHEME);
+    cur_instruction_label.setFont(new Font("Monospaced", Font.PLAIN, 30));
+    cur_instruction_label.setLocalColorScheme(GCScheme.YELLOW_SCHEME);
     task_receipe_completion = new GLabel(this, width/2 - 250, height/2 - 150, 500, 300);
     task_receipe_completion.setTextAlign(GAlign.CENTER, GAlign.MIDDLE);
     task_receipe_completion.setFont(new Font("Monospaced", Font.PLAIN, 90));
@@ -116,8 +128,12 @@ void create_start_button(){
 GButton start_button;
 GLabel cur_instruction_label;
 GLabel task_receipe_completion;
+GLabel timer;
+GLabel tempature;
 public void start_button(GButton source, GEvent event){
-     background(0);
-     start_button.dispose();
-     createGUI();
+  start_button.setAlpha(0);
+  start_button.dispose();
+  start_button = null;
+  background(0);
+   createGUI();
 }

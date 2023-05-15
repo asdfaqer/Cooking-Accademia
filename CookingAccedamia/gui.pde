@@ -63,21 +63,29 @@ public void button1_click1(GButton source, GEvent event) { //_CODE_:button1:2546
   println("button1 - GButton >> GEvent." + event + " @ " + millis());
   
   ingredient_quantities.add(new GCustomSlider(Receipe, 120, 60 + 40*i, 100, 40, "grey_blue"));
-  ingredient_quantities.get(i).setLimits(50.0, 10.0, 100.0);
+  ingredient_quantities.get(i).setLimits(0.0, 10.0, 100.0);
   ingredient_quantities.get(i).setNumberFormat(G4P.DECIMAL, 2);
   ingredient_quantities.get(i).setOpaque(false);
   ingredient_quantities.get(i).addEventHandler(this, "change_quantities");
 } //_CODE_:button1:254614:
+
 public void generating_receipes(GButton source, GEvent event){
-  receipe_selected = new GLabel(Receipe, 126, 222, 300, 100);
-  receipe_selected.setTextAlign(GAlign.CENTER, GAlign.MIDDLE);
-  receipe_selected.setText("Generated reciepe: sausages");
-  receipe_selected.setOpaque(false);
-  String[] instruction_list = loadStrings("Receipe.txt");
-  for(int i = 0; i < instruction_list.length; i++){
-    instructions.add(instruction_list[i]);
+  if(ingredients_selected.contains("Select Ingredients")){
+    receipe_selected.setText("sorry, but you need to finish your selection");
+    return;
   }
-  step_num = 1;
+  if(cooked_sausages.criteria_meet()){
+    receipe_selected.setText("Generated reciepe: sausages");
+    String[] instruction_list = loadStrings("Receipe.txt");
+    for(int i = 0; i < instruction_list.length; i++){
+    instructions.add(instruction_list[i]);
+    }
+    step_num = 1;
+  }
+  else{
+    receipe_selected.setText("sorry, but there are no matchs found");
+    return;
+  }
 }
 
 // Create all the GUI controls. 
@@ -97,17 +105,20 @@ public void createGUI(){
   dropLists.add(new GDropList(Receipe, 29, 60, 90, 80, 3, 10));
   dropLists.get(0).setItems(loadStrings("list_374668"), 0);
   dropLists.get(0).addEventHandler(this, "dropList1_click1");
-  add_ingredient = new GButton(Receipe, 190, 145, 80, 30);
+  add_ingredient = new GButton(Receipe, 190, 300, 80, 30);
   add_ingredient.setText("add ingerdient");
   add_ingredient.addEventHandler(this, "button1_click1");
   generate_receipes = new GButton(Receipe, 500, 300, 80, 30);
   generate_receipes.setText("generate receipes");
   generate_receipes.addEventHandler(this, "generating_receipes");
   ingredient_quantities.add(new GCustomSlider(Receipe, 120, 60, 100, 40, "grey_blue"));
-  ingredient_quantities.get(0).setLimits(50.0, 10.0, 100.0);
+  ingredient_quantities.get(0).setLimits(0.0, 10.0, 100.0);
   ingredient_quantities.get(0).setNumberFormat(G4P.DECIMAL, 2);
   ingredient_quantities.get(0).setOpaque(false);
   ingredient_quantities.get(0).addEventHandler(this, "change_quantities");
+  receipe_selected = new GLabel(Receipe, 126, 222, 300, 100);
+  receipe_selected.setTextAlign(GAlign.CENTER, GAlign.MIDDLE);
+  receipe_selected.setOpaque(false);
   
   //Music window
   
