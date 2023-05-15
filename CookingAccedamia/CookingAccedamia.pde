@@ -1,5 +1,6 @@
 import processing.sound.*;
 import g4p_controls.*;
+import java.awt.*;
 String selectedAppliance = "";
 int ovenstemperaure = 50;
 boolean button_pressed = false;
@@ -22,13 +23,19 @@ void setup(){
 boolean scene_setup = false;
 String cur_instruction;
 void draw(){
+  if(task_completed && round(random(0,100))==1){    
+    background(0);
+    task_receipe_completion.setText("");
+    task_completed = false;
+    return;
+  }
   cooking_mode = false;
   try{
     cur_instruction = instructions.get(step_num-1);
     //find scene
     if (cur_instruction.substring(0,5).equals("oven ")){
       cooking_mode = true;
-    }
+    }  
     if(scene_setup){
       background(0);
       cur_instruction_label.setText(cur_instruction);
@@ -94,6 +101,11 @@ void set_up_scene(){
     cur_instruction_label.setTextAlign(GAlign.CENTER, GAlign.MIDDLE);
     cur_instruction_label.setOpaque(false);
     cur_instruction_label.setLocalColorScheme(GCScheme.ORANGE_SCHEME);
+    task_receipe_completion = new GLabel(this, width/2 - 250, height/2 - 150, 500, 300);
+    task_receipe_completion.setTextAlign(GAlign.CENTER, GAlign.MIDDLE);
+    task_receipe_completion.setFont(new Font("Monospaced", Font.PLAIN, 90));
+    task_receipe_completion.setOpaque(false);
+    task_receipe_completion.setLocalColorScheme(GCScheme.YELLOW_SCHEME);
   }
 }
 void create_start_button(){
@@ -103,9 +115,9 @@ void create_start_button(){
 }
 GButton start_button;
 GLabel cur_instruction_label;
+GLabel task_receipe_completion;
 public void start_button(GButton source, GEvent event){
      background(0);
-     surface.setSize(500,500);
      start_button.dispose();
      createGUI();
 }

@@ -14,37 +14,15 @@
  * =========================================================
  */
 int i = 0;
-int target_temp = -1;
-int target_time = -1;
 int step_num = 0;
-
-public void changeoventemp(GKnob source, GEvent event) { //_CODE_:Temp:491161:
-  if(target_temp == source.getValueI()){
-    step_num ++;
-    target_temp = -1;
-    if(step_num > instructions.size()){
-      task_complete();
-    }
-    print("ok");
-  }
-  println(source.getValueI(), target_temp);
-} //_CODE_:Temp:491161:
-
-public void changetimeforoven(GKnob source, GEvent event) { //_CODE_:time:476537:
-  if(target_time == source.getValueI()){
-    step_num ++;
-    target_time = -1;
-    if(step_num > instructions.size()){
-      task_complete();
-    }
-    print("ok");
-  }
-  println(source.getValueI(), target_time);
-} //_CODE_:time:476537:
+ //_CODE_:time:476537:
+void receipe_complete(){
+  background(0);
+  task_receipe_completion.setText("RECEIPE COMPLETED");
+}
 void task_complete(){
-  fill(255);
-  textAlign(CENTER);
-  text("TASK COMPLETED",width/2, height/2, 300, 100);
+  background(0);
+  task_receipe_completion.setText("TASK COMPLETED");
 }
 synchronized public void Receipe_Window(PApplet appc, GWinData data) { //_CODE_:Receipe:431125:
   appc.background(230);
