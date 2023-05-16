@@ -31,7 +31,7 @@ public void changetimeforoven(GKnob source, GEvent event) { //_CODE_:time:476537
       return;
     }
     task_complete();
-    task_completed = true; // // set taked complated to true;
+    task_completed = true; // // set task complated to true;
   }
   println(source.getValueI(), target_time);
 }
