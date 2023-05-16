@@ -1,48 +1,49 @@
 import processing.sound.*;
 import g4p_controls.*;
 import java.awt.*;
-Receipe cooked_sausages = new Receipe(0,0,0,0,0,0,1);
-String selectedAppliance = "";
-int ovenstemperaure = 50;
-boolean button_pressed = false;
+Receipe cooked_sausages = new Receipe(0,0,0,0,0,0,1); // create the recipe
+String selectedAppliance = ""; // select the appliance used to cook
+int ovenstemperaure = 50; // set the ovensinitial temperaure
+boolean button_pressed = false; // determine if the button is pressed or not
+
+// input the files such as picures and sound files
 PImage oven;
 PImage cooklo;
 SoundFile Song;
-boolean cooking_mode = false;
-ArrayList<String> instructions = new ArrayList<String>();
+boolean cooking_mode = false; // store weather the receipe the user choose is qualified to use or not
+ArrayList<String> instructions = new ArrayList<String>(); // store all instructions.
 
 void setup(){
   size(800,600);
   surface.setResizable(true);
-  oven = loadImage("openoven.png");
-  cooklo = loadImage("cooklogo.png");
+  oven = loadImage("openoven.png"); // load image
+  cooklo = loadImage("cooklogo.png");// load image
    
-  //SongImage = loadImage ("Cool Out Son Image");
+  //SongImage = loadImage ("Cool Out Son Image"); // load image
   
-  Song = new SoundFile(this, "a.wav");
-  Song.play();
+  Song = new SoundFile(this, "a.wav"); // create the new song file
+  Song.play(); // play the music
   
-  create_start_button();
-  
-  
+  create_start_button(); // call this function to make button in the bottom of the screen
+   
 }
 boolean scene_setup = false;
-String cur_instruction;
+String cur_instruction; // store the current instruction selected
 void draw(){
-  if(task_completed && round(random(0,100))==1){    
+  if(task_completed && round(random(0,100))==1){     // if the task is completed 
     background(0);
-    task_receipe_completion.setText("");
-    task_completed = false;
+    task_receipe_completion.setText(""); // set the text to a empty string
+    task_completed = false; // set task_completed back to false
     return;
   }
-  cooking_mode = false;
+  cooking_mode = false; // set the cooking mode back to false
   try{
     cur_instruction = instructions.get(step_num-1);
-    //find scene
-    if (cur_instruction.substring(0,5).equals("oven ")){
-      cooking_mode = true;
+    //find scene 
+    if (cur_instruction.substring(0,5).equals("oven ")){ // if we selected oven
+      cooking_mode = true; // set the cooking _ mode to true
     }  
-    if(scene_setup){
+    if(scene_setup){ // show the user the steps to cook the recipe selected
       background(0);
       cur_instruction_label.setText("STEP #" + str(step_num) + ":\n" + cur_instruction.substring(5,cur_instruction.length()));
     }
@@ -56,18 +57,20 @@ void draw(){
       set_up_scene();
       scene_setup = true;
     }
-    image(oven,0,0,width,height);
+    image(oven,0,0,width,height); // add the image of the oven when the user need to use the oven to cook the recipe
     
     
     
-    if(cur_instruction.substring(5,10).equals("heat ")){
-      target_temp = int(cur_instruction.substring(13, cur_instruction.indexOf("C")-1));
+    if(cur_instruction.substring(5,10).equals("heat ")){ // if the instruction is heat the oven up
+      target_temp = int(cur_instruction.substring(13, cur_instruction.indexOf("C")-1)); // the user need to drag the knob to change the temperature
     }
-    if(cur_instruction.substring(5,10).equals("cook ")){
-      target_time = int(cur_instruction.substring(14, cur_instruction.indexOf("m")-1));
+    if(cur_instruction.substring(5,10).equals("cook ")){ // if the instruction is set the timer
+      target_time = int(cur_instruction.substring(14, cur_instruction.indexOf("m")-1)); // the user need to drag the knob ot change the time
     }
   }
 }
+
+// setup the scene and gui of the screen
 void set_up_scene(){
   if(cooking_mode){
     Temp = new GKnob(this, 138, 40, 60, 60, 0.8);
@@ -136,17 +139,20 @@ void create_start_button(){
   
   
 }
+// create button manually using different documentation
 GButton start_button;
 GLabel cur_instruction_label;
 GLabel task_receipe_completion;
 GLabel timer;
 GLabel tempature;
+
+// this function creates the staring button in the home screen
 public void start_button(GButton source, GEvent event){
   
   start_button.setAlpha(0);
   start_button.dispose();
   start_button = null;
   background(0);
-  createGUI();
+  createGUI(); // call the create gui function in the gui tab
    
 }
