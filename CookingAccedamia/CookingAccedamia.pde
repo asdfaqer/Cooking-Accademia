@@ -9,6 +9,7 @@ boolean button_pressed = false; // determine if the button is pressed or not
 // input the files such as picures and sound files
 PImage oven;
 PImage cooklo;
+PImage songImage;
 SoundFile Song;
 boolean cooking_mode = false; // store weather the receipe the user choose is qualified to use or not
 ArrayList<String> instructions = new ArrayList<String>(); // store all instructions.
@@ -18,8 +19,7 @@ void setup(){
   surface.setResizable(true);
   oven = loadImage("openoven.png"); // load image
   cooklo = loadImage("cooklogo.png");// load image
-   
-  //SongImage = loadImage ("Cool Out Son Image"); // load image
+  songImage = loadImage("Cool Out Son Image.PNG");// load image
   
   Song = new SoundFile(this, "a.wav"); // create the new song file
   Song.play(); // play the music
