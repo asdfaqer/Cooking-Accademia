@@ -21,6 +21,10 @@ void setup(){
   cooklo = loadImage("cooklogo.png");// load image
   songImage = loadImage("Cool Out Son Image.PNG");// load image
   
+  
+   
+  //SongImage = loadImage ("Cool Out Son Image;
+  
   Song = new SoundFile(this, "a.wav"); // create the new song file
   Song.play(); // play the music
   
@@ -30,6 +34,7 @@ void setup(){
 boolean scene_setup = false;
 String cur_instruction; // store the current instruction selected
 void draw(){
+  image(cooklo,0,0,width,height);
   if(task_completed && round(random(0,100))==1){     // if the task is completed 
     background(0);
     task_receipe_completion.setText(""); // set the text to a empty string
