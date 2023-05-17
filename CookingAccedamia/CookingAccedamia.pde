@@ -35,7 +35,7 @@ boolean scene_setup = false;
 String cur_instruction; // store the current instruction selected
 void draw(){
   image(cooklo,0,0,width,height);
-  if(task_completed && round(random(0,100))==1){     // if the task is completed 
+  if(task_completed && round(random(0,100))==1){ // if the task is completed 
     background(0);
     task_receipe_completion.setText(""); // set the text to a empty string
     task_completed = false; // set task_completed back to false
