@@ -21,10 +21,6 @@ void setup(){
   cooklo = loadImage("cooklogo.png");// load image
   songImage = loadImage("Cool Out Son Image.PNG");// load image
   
-  
-   
-  //SongImage = loadImage ("Cool Out Son Image;
-  
   Song = new SoundFile(this, "a.wav"); // create the new song file
   Song.play(); // play the music
   
