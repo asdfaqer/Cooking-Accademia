@@ -30,6 +30,7 @@ synchronized public void Receipe_Window(PApplet appc, GWinData data) { //_CODE_:
 
 synchronized public void Music_Window(PApplet appc, GWinData data) { //_CODE_:Music:895587:
   appc.background(230);
+  appc.image(songImage, 250, 0);
 } //_CODE_:Music:895587:
 
 ArrayList<String> ingredients_selected = new ArrayList<String>();
@@ -134,6 +135,7 @@ public void createGUI(){
   pause_button_music.setText("pause");
   pause_button_music.addEventHandler(this, "pause_music");
   volume = new GCustomSlider(Music, 0, 60, 80, 30);
+  
   volume.setLimits(0.5, 0.0, 1.0);
   volume.setNumberFormat(G4P.DECIMAL, 2);
   volume.setOpaque(false);

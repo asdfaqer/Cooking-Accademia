@@ -30,13 +30,13 @@ class Receipe{
     boolean need_for_sausages;
     
 
-    need_for_salt = this.salt>0?true:false;
-    need_for_pepper = this.pepper>0?true:false;
-    need_for_olive_oil = this.olive_oil>0?true:false;
-    need_for_vegetable_oil = this.vegetable_oil>0?true:false;
-    need_for_flour = this.flour>0?true:false;
-    need_for_sugar = this.sugar>0?true:false;
-    need_for_sausages = this.sausages>0?true:false;
+    need_for_salt = this.salt>0?true:false; // if this.salt is greater than zero, then return true, else return false
+    need_for_pepper = this.pepper>0?true:false; // if this.pepper is greater than zero, then return true, else return false
+    need_for_olive_oil = this.olive_oil>0?true:false; // if this.olive_oil is greater than zero, then return true, else return false
+    need_for_vegetable_oil = this.vegetable_oil>0?true:false; // if this.vegetable_oil is greater than zero, then return true, else return false
+    need_for_flour = this.flour>0?true:false; // if this.flour is greater than zero, then return true, else return false
+    need_for_sugar = this.sugar>0?true:false;// if this.sugar is greater than zero, then return true, else return false
+    need_for_sausages = this.sausages>0?true:false; // // if this.sausages is greater than zero, then return true, else return false
    
     for(int i = 0; i < ingredients_selected.size()&& i < quantities_values.size(); i++){
       if(ingredients_selected.get(i).equals("Salt")){ // if the user selected salt
