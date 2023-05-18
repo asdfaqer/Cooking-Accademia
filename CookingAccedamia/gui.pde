@@ -28,10 +28,7 @@ synchronized public void Receipe_Window(PApplet appc, GWinData data) { //_CODE_:
   appc.background(230);
 } //_CODE_:Receipe:431125:
 
-synchronized public void Music_Window(PApplet appc, GWinData data) { //_CODE_:Music:895587:
-  appc.background(230);
-  appc.image(songImage, 250, 0);
-} //_CODE_:Music:895587:
+//_CODE_:Music:895587:
 
 ArrayList<String> ingredients_selected = new ArrayList<String>();
 public void dropList1_click1(GDropList source, GEvent event) { //_CODE_:dropList1:693695:
@@ -123,18 +120,18 @@ public void createGUI(){
   
   //Music window
   
-  Music = GWindow.getWindow(this, "Music", 0, 200, 800, 400, JAVA2D);
+  Music = GWindow.getWindow(this, "Music", 0, 200, 300, 300, JAVA2D);
   Music.noLoop();
   Music.setActionOnClose(G4P.KEEP_OPEN);
   Music.addDrawHandler(this, "Music_Window");
   
-  play_button_music = new GButton(Music, 0, 0, 80, 30);
+  play_button_music = new GButton(Music, 50, 240, 80, 30);
   play_button_music.setText("play");
   play_button_music.addEventHandler(this, "play_music");
-  pause_button_music = new GButton(Music, 100, 0, 80, 30);
+  pause_button_music = new GButton(Music, 175, 240, 80, 30);
   pause_button_music.setText("pause");
   pause_button_music.addEventHandler(this, "pause_music");
-  volume = new GCustomSlider(Music, 0, 60, 80, 30);
+  volume = new GCustomSlider(Music, 110, 215, 80, 30);
   
   volume.setLimits(0.5, 0.0, 1.0);
   volume.setNumberFormat(G4P.DECIMAL, 2);
