@@ -33,12 +33,6 @@ synchronized public void win_draw4(PApplet appc, GWinData data) { //_CODE_:windo
 } //_CODE_:Receipe:431125:
 
 //_CODE_:Music:895587:
-synchronized public void Music_Window(PApplet appc, GWinData data) { //_CODE_:Music:895587:
- //_CODE_:window2:895587:
-  appc.background(230);
-  appc.image(songImage, 250, 0);
-} //_CODE_:Music:895587:
-
 ArrayList<String> ingredients_selected = new ArrayList<String>();
 public void dropList1_click1(GDropList source, GEvent event) { //_CODE_:dropList1:693695:
   if (ingredients_selected.contains(source.getSelectedText())){
@@ -147,6 +141,12 @@ public void createGUI(){
   volume.setOpaque(false);
   volume.addEventHandler(this,"change_volume");
   
+  volume_label = new GLabel(Music, 128, 199, 60, 40);
+  //volume_label.setTextAlign(GAlign.CENTER, GAlign.MIDDLE);
+  volume_label.setText("Volume");
+  volume_label.setLocalColorScheme(GCScheme.ORANGE_SCHEME);
+  volume_label.setOpaque(false);
+  
   Receipe.loop();
   Music.loop();
 }
@@ -169,3 +169,4 @@ GLabel Ovenslabel;
 GWindow Music;
 GButton add_ingredient;
 GButton generate_receipes;
+GLabel volume_label;
