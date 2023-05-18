@@ -9,8 +9,11 @@ boolean button_pressed = false; // determine if the button is pressed or not
 // input the files such as picures and sound files
 PImage oven;
 PImage cooklo;
+PImage tray;
+PImage sausages;
 SoundFile Song;
-boolean cooking_mode = false; // store weather the receipe the user choose is qualified to use or not
+boolean cooking_mode = false; // store whether the scene to be displayed is the oven scene
+boolean add_mode = true; // store whether the scene to be displayed is the tray scene
 ArrayList<String> instructions = new ArrayList<String>(); // store all instructions.
 
 void setup(){
@@ -18,6 +21,8 @@ void setup(){
   surface.setResizable(true);
   oven = loadImage("openoven.png"); // load image
   cooklo = loadImage("cooklogo.png");// load image
+  tray = loadImage("tray.png");
+  sausages = loadImage("sausages.png");
    
   //SongImage = loadImage ("Cool Out Son Image"); // load image
   
@@ -59,13 +64,21 @@ void draw(){
     }
     image(oven,0,0,width,height); // add the image of the oven when the user need to use the oven to cook the recipe
     
-    
-    
     if(cur_instruction.substring(5,10).equals("heat ")){ // if the instruction is heat the oven up
       target_temp = int(cur_instruction.substring(13, cur_instruction.indexOf("C")-1)); // the user need to drag the knob to change the temperature
     }
     if(cur_instruction.substring(5,10).equals("cook ")){ // if the instruction is set the timer
       target_time = int(cur_instruction.substring(14, cur_instruction.indexOf("m")-1)); // the user need to drag the knob ot change the time
+    }
+  }
+  if(add_mode){
+    try{
+      image(tray, 0, 0, width,height);
+      if(true){
+        image(sausages, 0, 0, width/5, height/5);
+      }
+    }
+    catch(Exception e){
     }
   }
 }
