@@ -25,10 +25,19 @@ void task_complete(){
   task_receipe_completion.setText("TASK COMPLETED");
 }
 synchronized public void Receipe_Window(PApplet appc, GWinData data) { //_CODE_:Receipe:431125:
+}
+synchronized public void win_draw4(PApplet appc, GWinData data) { //_CODE_:window1:431125:
+  fill(0);
+  square(100,100,100);
   appc.background(230);
 } //_CODE_:Receipe:431125:
 
 //_CODE_:Music:895587:
+synchronized public void Music_Window(PApplet appc, GWinData data) { //_CODE_:Music:895587:
+ //_CODE_:window2:895587:
+  appc.background(230);
+  appc.image(songImage, 250, 0);
+} //_CODE_:Music:895587:
 
 ArrayList<String> ingredients_selected = new ArrayList<String>();
 public void dropList1_click1(GDropList source, GEvent event) { //_CODE_:dropList1:693695:
