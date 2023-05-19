@@ -48,12 +48,14 @@ public void dropList1_click1(GDropList source, GEvent event) { //_CODE_:dropList
   println("dropList1 - GDropList >> GEvent." + event + " @ " + millis());
 
 } //_CODE_:dropList1:693695:
-ArrayList<Float> quantities_values = new ArrayList<Float>();
+ArrayList<Integer> quantities_values = new ArrayList<Integer>();
 
 public void change_quantities(GCustomSlider source, GEvent event){
   quantities_values.clear();
   for( int j = 0; j <= i; j++){
-    quantities_values.add(ingredient_quantities.get(j).getValueF());
+    quantities_values.add(ingredient_quantities.get(j).getValueI());
+    quantities_label.get(j).setText(quantities_values.get(j) + " g");
+    Receipe.background(200);
   }
   println(quantities_values);
 }
@@ -64,7 +66,8 @@ public void button1_click1(GButton source, GEvent event) { //_CODE_:button1:2546
   dropLists.get(i).setItems(loadStrings("list_374668"), 0);
   dropLists.get(i).addEventHandler(this, "dropList1_click1");
   println("button1 - GButton >> GEvent." + event + " @ " + millis());
-  
+  quantities_label.add(new GLabel(Receipe, 120, 40 + 40* i, 100, 50));
+  quantities_label.get(i).setText("N/A");
   ingredient_quantities.add(new GCustomSlider(Receipe, 120, 60 + 40*i, 100, 40, "grey_blue"));
   ingredient_quantities.get(i).setLimits(0.0, 10.0, 100.0);
   ingredient_quantities.get(i).setNumberFormat(G4P.DECIMAL, 2);
@@ -119,6 +122,7 @@ public void createGUI(){
   ingredient_quantities.get(0).setNumberFormat(G4P.DECIMAL, 2);
   ingredient_quantities.get(0).setOpaque(false);
   ingredient_quantities.get(0).addEventHandler(this, "change_quantities");
+  quantities_label.add(new GLabel(Receipe, 120, 40, 100, 50, "N/A"));
   receipe_selected = new GLabel(Receipe, 126, 222, 300, 100);
   receipe_selected.setTextAlign(GAlign.CENTER, GAlign.MIDDLE);
   receipe_selected.setOpaque(false);
@@ -166,6 +170,7 @@ GLabel timelabel;
 GWindow Receipe;
 ArrayList<GDropList> dropLists = new ArrayList<GDropList>();
 ArrayList<GCustomSlider> ingredient_quantities = new ArrayList<GCustomSlider>();
+ArrayList<GLabel> quantities_label = new ArrayList<GLabel>();
 GCustomSlider oventemp; 
 GLabel Ovenslabel; 
 GWindow Music;
