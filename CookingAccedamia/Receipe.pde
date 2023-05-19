@@ -7,9 +7,10 @@ class Receipe{
   float flour;
   float sugar;
   float sausages;
-  
+  PImage image;
+  PVector image_location = new PVector(0,0);
   // consturctor to construct the fields needed
-  Receipe(float s, float p, float o, float v, float f, float su, float sa){
+  Receipe(float s, float p, float o, float v, float f, float su, float sa, PImage im){
     this.salt = s;
     this.pepper = p;
     this.olive_oil = o;
@@ -17,6 +18,7 @@ class Receipe{
     this.flour = f;
     this.sugar = su;
     this.sausages = sa;
+    this.image = im;
   }
   //methods
   boolean criteria_meet(){

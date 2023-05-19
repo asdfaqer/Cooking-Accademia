@@ -1,7 +1,6 @@
 import processing.sound.*;
 import g4p_controls.*;
 import java.awt.*;
-Receipe cooked_sausages = new Receipe(0,0,0,0,0,0,1); // create the recipe
 String selectedAppliance = ""; // select the appliance used to cook
 int ovenstemperaure = 50; // set the ovensinitial temperaure
 boolean button_pressed = false; // determine if the button is pressed or not
@@ -14,12 +13,14 @@ PImage sausages;
 PImage songImage;
 SoundFile Song;
 boolean cooking_mode = false; // store whether the scene to be displayed is the oven scene
-boolean add_mode = true; // store whether the scene to be displayed is the tray scene
+boolean add_mode = false; // store whether the scene to be displayed is the tray scene
 ArrayList<String> instructions = new ArrayList<String>(); // store all instructions.
-
+Receipe cooked_sausages;
+int delay = 40;// how long temparry text stays up
+int frame;
 void setup(){
   size(800,600);
-  surface.setResizable(true);
+  cooked_sausages = new Receipe(0,0,0,0,0,0,1,loadImage("sausages.png")); // create the recipe
   oven = loadImage("openoven.png"); // load image
   cooklo = loadImage("cooklogo.png");// load image
   tray = loadImage("tray.png");
@@ -33,24 +34,32 @@ void setup(){
   
   create_start_button(); // call this function to make button in the bottom of the screen
    
+  set_up_task_recipe_completion();
+
 }
+
 boolean scene_setup = false;
 String cur_instruction; // store the current instruction selected
 void draw(){
-  image(cooklo,0,0,width,height);
-  if(task_completed && round(random(0,100))==1){ // if the task is completed 
+  frame++;
+  //image(cooklo,0,0,width,height);
+  if(task_completed && frame > delay - 1){ // if the task is completed 
+    print("ok");
     background(0);
-    task_receipe_completion.setText(""); // set the text to a empty string
+    task_recipe_completion.setText("");
     task_completed = false; // set task_completed back to false
-    return;
   }
   cooking_mode = false; // set the cooking mode back to false
+  add_mode = false;
   try{
     cur_instruction = instructions.get(step_num-1);
     //find scene 
     if (cur_instruction.substring(0,5).equals("oven ")){ // if we selected oven
       cooking_mode = true; // set the cooking _ mode to true
     }  
+    else if ( cur_instruction.substring(0,5).equals("tray ")){
+      add_mode = true;
+    }
     if(scene_setup){ // show the user the steps to cook the recipe selected
       background(0);
       cur_instruction_label.setText("STEP #" + str(step_num) + ":\n" + cur_instruction.substring(5,cur_instruction.length()));
@@ -61,10 +70,12 @@ void draw(){
   }
   //set up scene
   if(cooking_mode){
+    //print(step_num);
     if(!scene_setup){
       set_up_scene();
       scene_setup = true;
     }
+    
     image(oven,0,0,width,height); // add the image of the oven when the user need to use the oven to cook the recipe
     
     if(cur_instruction.substring(5,10).equals("heat ")){ // if the instruction is heat the oven up
@@ -75,10 +86,11 @@ void draw(){
     }
   }
   if(add_mode){
+    set_up_scene();
     try{
       image(tray, 0, 0, width,height);
       if(true){
-        image(sausages, 0, 0, width/5, height/5);
+        image(cooked_sausages.image, cooked_sausages.image_location.x - width/10, cooked_sausages.image_location.y - height/10, width/5, height/5);
       }
     }
     catch(Exception e){
@@ -86,6 +98,13 @@ void draw(){
   }
 }
 
+void set_up_task_recipe_completion(){
+  task_recipe_completion = new GLabel(this, width/2 - 250, height/2 - 150, 500, 300);
+  task_recipe_completion.setTextAlign(GAlign.CENTER, GAlign.MIDDLE);
+  task_recipe_completion.setFont(new Font("Monospaced", Font.PLAIN, 90));
+  task_recipe_completion.setOpaque(false);
+  task_recipe_completion.setLocalColorScheme(GCScheme.YELLOW_SCHEME);
+}
 // setup the scene and gui of the screen
 void set_up_scene(){
   if(cooking_mode){
@@ -140,11 +159,6 @@ void set_up_scene(){
     cur_instruction_label.setOpaque(false);
     cur_instruction_label.setFont(new Font("Monospaced", Font.PLAIN, 30));
     cur_instruction_label.setLocalColorScheme(GCScheme.YELLOW_SCHEME);
-    task_receipe_completion = new GLabel(this, width/2 - 250, height/2 - 150, 500, 300);
-    task_receipe_completion.setTextAlign(GAlign.CENTER, GAlign.MIDDLE);
-    task_receipe_completion.setFont(new Font("Monospaced", Font.PLAIN, 90));
-    task_receipe_completion.setOpaque(false);
-    task_receipe_completion.setLocalColorScheme(GCScheme.YELLOW_SCHEME);
   }
 }
 void create_start_button(){
@@ -158,7 +172,7 @@ void create_start_button(){
 // create button manually using different documentation
 GButton start_button;
 GLabel cur_instruction_label;
-GLabel task_receipe_completion;
+GLabel task_recipe_completion;
 GLabel timer;
 GLabel tempature;
 

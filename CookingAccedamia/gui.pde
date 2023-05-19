@@ -16,14 +16,16 @@
 int i = 0;
 int step_num = 0;
  //_CODE_:time:476537:
-void receipe_complete(){
+public void receipe_complete(){
   background(0);
-  task_receipe_completion.setText("RECEIPE COMPLETED");
+  task_recipe_completion.setText("RECEIPE COMPLETED");
 }
-void task_complete(){
+public void task_complete(){
   background(0);
-  task_receipe_completion.setText("TASK COMPLETED");
+  task_recipe_completion.setText("TASK COMPLETED");
+  frame = 0;
 }
+
 synchronized public void Receipe_Window(PApplet appc, GWinData data) { //_CODE_:Receipe:431125:
 }
 synchronized public void win_draw4(PApplet appc, GWinData data) { //_CODE_:window1:431125:
