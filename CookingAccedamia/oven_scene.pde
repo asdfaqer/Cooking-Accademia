@@ -10,7 +10,7 @@ public void changeoventemp(GKnob source, GEvent event) { //_CODE_:Temp:491161:
     step_num ++; // add the step numer when this step is done
     target_temp = -1; // set the target temp to -1 
     if(step_num > instructions.size()){ // if the user completed this instruction
-      receipe_complete(); // output the complete receiple screen;
+      recipe_complete(); // output the complete receiple screen;
       return;
     }
     task_complete();
@@ -27,7 +27,7 @@ public void changetimeforoven(GKnob source, GEvent event) { //_CODE_:time:476537
     step_num ++; // move onto the next step 
     target_time = -1; 
     if(step_num > instructions.size()){ //if the user completed this instruction
-      receipe_complete(); // output the complete receiple screen;
+      recipe_complete(); // output the complete receiple screen;
       return;
     }
     task_complete();

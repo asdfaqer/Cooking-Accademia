@@ -4,29 +4,36 @@ import java.awt.*;
 String selectedAppliance = ""; // select the appliance used to cook
 int ovenstemperaure = 50; // set the ovensinitial temperaure
 boolean button_pressed = false; // determine if the button is pressed or not
+ArrayList<Recipe> used_ingredients = new ArrayList<Recipe>();
 
 // input the files such as picures and sound files
 PImage oven;
 PImage cooklo;
 PImage tray;
+PImage mixer;
 PImage sausages;
 PImage songImage;
 SoundFile Song;
+
 boolean cooking_mode = false; // store whether the scene to be displayed is the oven scene
 boolean add_mode = false; // store whether the scene to be displayed is the tray scene
+boolean mix_mode = false; // store whether the scene to be displayed is the mixer scene
+boolean cutting_board_mode = false; // store whether the scene to be displayed is the cutting board scene
+
 ArrayList<String> instructions = new ArrayList<String>(); // store all instructions.
-Receipe cooked_sausages;
+Recipe cooked_sausages;
 int delay = 40;// how long temparry text stays up
 int frame;
 void setup(){
   size(800,600);
-  cooked_sausages = new Receipe(0,0,0,0,0,0,1,loadImage("sausages.png")); // create the recipe
+  cooked_sausages = new Recipe("cooked sausages",0,0,0,0,0,0,1,loadImage("sausages.png")); // create the recipe
   oven = loadImage("openoven.png"); // load image
   cooklo = loadImage("cooklogo.png");// load image
   tray = loadImage("tray.png");
   sausages = loadImage("sausages.png");
-   
-  //SongImage = loadImage ("Cool Out Son Image"); // load image
+  mixer = loadImage("mixer.png");
+  
+  //music window
   songImage = loadImage("Cool Out Son Image.PNG");// load image
   
   Song = new SoundFile(this, "a.wav"); // create the new song file
@@ -49,17 +56,25 @@ void draw(){
     task_recipe_completion.setText("");
     task_completed = false; // set task_completed back to false
   }
-  cooking_mode = false; // set the cooking mode back to false
+  
+  // set all modes to false
+  cooking_mode = false;
   add_mode = false;
+  
   try{
     cur_instruction = instructions.get(step_num-1);
     //find scene 
     if (cur_instruction.substring(0,5).equals("oven ")){ // if we selected oven
       cooking_mode = true; // set the cooking _ mode to true
+      print("cool");
     }  
     else if ( cur_instruction.substring(0,5).equals("tray ")){
       add_mode = true;
     }
+    else if ( cur_instruction.substring(0,5).equals("mixer")){
+      mix_mode = true;
+    }
+    
     if(scene_setup){ // show the user the steps to cook the recipe selected
       background(0);
       cur_instruction_label.setText("STEP #" + str(step_num) + ":\n" + cur_instruction.substring(5,cur_instruction.length()));
@@ -70,7 +85,7 @@ void draw(){
   }
   //set up scene
   if(cooking_mode){
-    //print(step_num);
+    print(step_num);
     if(!scene_setup){
       set_up_scene();
       scene_setup = true;
@@ -85,16 +100,26 @@ void draw(){
       target_time = int(cur_instruction.substring(14, cur_instruction.indexOf("m")-1)); // the user need to drag the knob ot change the time
     }
   }
-  if(add_mode){
+  else if(add_mode){
     set_up_scene();
     try{
+      int j = 0;
       image(tray, 0, 0, width,height);
-      if(true){
-        image(cooked_sausages.image, cooked_sausages.image_location.x - width/10, cooked_sausages.image_location.y - height/10, width/5, height/5);
+      for(Recipe i: used_ingredients){
+        j++;
+        image(i.image, i.image_location.x - width/10 + j * 30 , i.image_location.y - height/10, width/5, height/5);
       }
     }
     catch(Exception e){
     }
+  }
+  else if(mix_mode){
+    set_up_scene();
+    try{
+      //image(mixer, 0, 0, width, height);
+      image(cooked_sausages.image, cooked_sausages.image_location.x - width/10, cooked_sausages.image_location.y - height/10, width/5, height/5);
+    }
+    catch(Exception e){}
   }
 }
 
@@ -161,6 +186,7 @@ void set_up_scene(){
     cur_instruction_label.setLocalColorScheme(GCScheme.YELLOW_SCHEME);
   }
 }
+
 void create_start_button(){
   image(cooklo,0,0,width,height);
   start_button = new GButton(this, width/2 - 150, height*3/4, 300, 100);

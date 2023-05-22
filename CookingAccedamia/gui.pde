@@ -16,9 +16,9 @@
 int i = 0;
 int step_num = 0;
  //_CODE_:time:476537:
-public void receipe_complete(){
+public void recipe_complete(){
   background(0);
-  task_recipe_completion.setText("RECEIPE COMPLETED");
+  task_recipe_completion.setText("recipe COMPLETED");
 }
 public void task_complete(){
   background(0);
@@ -26,13 +26,14 @@ public void task_complete(){
   frame = 0;
 }
 
-synchronized public void Receipe_Window(PApplet appc, GWinData data) { //_CODE_:Receipe:431125:
+synchronized public void recipe_Window(PApplet appc, GWinData data) { //_CODE_:recipe:431125:
+  appc.background(230);
 }
 synchronized public void win_draw4(PApplet appc, GWinData data) { //_CODE_:window1:431125:
   fill(0);
   square(100,100,100);
   appc.background(230);
-} //_CODE_:Receipe:431125:
+} //_CODE_:recipe:431125:
 
 //_CODE_:Music:895587:
 ArrayList<String> ingredients_selected = new ArrayList<String>();
@@ -51,45 +52,53 @@ public void dropList1_click1(GDropList source, GEvent event) { //_CODE_:dropList
 ArrayList<Integer> quantities_values = new ArrayList<Integer>();
 
 public void change_quantities(GCustomSlider source, GEvent event){
+  Recipe.background(230);
   quantities_values.clear();
   for( int j = 0; j <= i; j++){
     quantities_values.add(ingredient_quantities.get(j).getValueI());
     quantities_label.get(j).setText(quantities_values.get(j) + " g");
-    Receipe.background(200);
   }
   println(quantities_values);
 }
 
 public void button1_click1(GButton source, GEvent event) { //_CODE_:button1:254614:
   i++;
-  dropLists.add(new GDropList(Receipe, 29, 60+ 40*i, 90, 80, 3, 10));
+  Recipe.background(230);
+  dropLists.add(new GDropList(Recipe, 29, 60+ 40*i, 90, 80, 3, 10));
   dropLists.get(i).setItems(loadStrings("list_374668"), 0);
   dropLists.get(i).addEventHandler(this, "dropList1_click1");
   println("button1 - GButton >> GEvent." + event + " @ " + millis());
-  quantities_label.add(new GLabel(Receipe, 120, 40 + 40* i, 100, 50));
+  quantities_label.add(new GLabel(Recipe, 120, 40 + 40* i, 100, 50));
   quantities_label.get(i).setText("N/A");
-  ingredient_quantities.add(new GCustomSlider(Receipe, 120, 60 + 40*i, 100, 40, "grey_blue"));
+  ingredient_quantities.add(new GCustomSlider(Recipe, 120, 60 + 40*i, 100, 40, "grey_blue"));
   ingredient_quantities.get(i).setLimits(0.0, 10.0, 100.0);
   ingredient_quantities.get(i).setNumberFormat(G4P.DECIMAL, 2);
   ingredient_quantities.get(i).setOpaque(false);
   ingredient_quantities.get(i).addEventHandler(this, "change_quantities");
 } //_CODE_:button1:254614:
-
-public void generating_receipes(GButton source, GEvent event){
+public void generating_recipes(GButton source, GEvent event){
+  Recipe.background(230);
+  boolean recipe_found = false;
   if(ingredients_selected.contains("Select Ingredients")){
-    receipe_selected.setText("sorry, but you need to finish your selection");
+    recipe_selected.setText("sorry, but you need to finish your selection");
     return;
   }
-  if(cooked_sausages.criteria_meet()){
-    receipe_selected.setText("Generated reciepe: sausages");
-    String[] instruction_list = loadStrings("Receipe.txt");
-    for(int i = 0; i < instruction_list.length; i++){
-    instructions.add(instruction_list[i]);
+  int num_of_recipes = 1;
+  for(int i = 0; i < num_of_recipes; i++){
+    if(cooked_sausages.criteria_meet() && !recipe_found){
+      recipe_selected.setText("Generated reciepe: sausages");
+      String[] instruction_list = loadStrings("sausages.txt");
+      for(int j = 0; j < instruction_list.length; j++){
+        instructions.add(instruction_list[j]);
+      }
+      print(instructions);
+      step_num = 1;
+      used_ingredients.addAll(cooked_sausages.using_ingredients());
+      recipe_found = true;
     }
-    step_num = 1;
   }
-  else{
-    receipe_selected.setText("sorry, but there are no matchs found");
+  if(!recipe_found){
+    recipe_selected.setText("sorry, but there are no matchs found");
     return;
   }
 }
@@ -104,28 +113,28 @@ public void createGUI(){
   
   //recipe generater window
   
-  Receipe = GWindow.getWindow(this, "Receipe", 800, 200, 800, 400, JAVA2D);
-  Receipe.noLoop();
-  Receipe.setActionOnClose(G4P.KEEP_OPEN);
-  Receipe.addDrawHandler(this, "Receipe_Window");
-  dropLists.add(new GDropList(Receipe, 29, 60, 90, 80, 3, 10));
+  Recipe = GWindow.getWindow(this, "Recipe", 800, 200, 800, 400, JAVA2D);
+  Recipe.noLoop();
+  Recipe.setActionOnClose(G4P.KEEP_OPEN);
+  Recipe.addDrawHandler(this, "Recipe_Window");
+  dropLists.add(new GDropList(Recipe, 29, 60, 90, 80, 3, 10));
   dropLists.get(0).setItems(loadStrings("list_374668"), 0);
   dropLists.get(0).addEventHandler(this, "dropList1_click1");
-  add_ingredient = new GButton(Receipe, 190, 300, 80, 30);
+  add_ingredient = new GButton(Recipe, 190, 300, 80, 30);
   add_ingredient.setText("add ingerdient");
   add_ingredient.addEventHandler(this, "button1_click1");
-  generate_receipes = new GButton(Receipe, 500, 300, 80, 30);
-  generate_receipes.setText("generate receipes");
-  generate_receipes.addEventHandler(this, "generating_receipes");
-  ingredient_quantities.add(new GCustomSlider(Receipe, 120, 60, 100, 40, "grey_blue"));
+  generate_recipes = new GButton(Recipe, 500, 300, 80, 30);
+  generate_recipes.setText("generate recipes");
+  generate_recipes.addEventHandler(this, "generating_recipes");
+  ingredient_quantities.add(new GCustomSlider(Recipe, 120, 60, 100, 40, "grey_blue"));
   ingredient_quantities.get(0).setLimits(0.0, 10.0, 100.0);
   ingredient_quantities.get(0).setNumberFormat(G4P.DECIMAL, 2);
   ingredient_quantities.get(0).setOpaque(false);
   ingredient_quantities.get(0).addEventHandler(this, "change_quantities");
-  quantities_label.add(new GLabel(Receipe, 120, 40, 100, 50, "N/A"));
-  receipe_selected = new GLabel(Receipe, 126, 222, 300, 100);
-  receipe_selected.setTextAlign(GAlign.CENTER, GAlign.MIDDLE);
-  receipe_selected.setOpaque(false);
+  quantities_label.add(new GLabel(Recipe, 120, 40, 100, 50, "N/A"));
+  recipe_selected = new GLabel(Recipe, 126, 222, 300, 100);
+  recipe_selected.setTextAlign(GAlign.CENTER, GAlign.MIDDLE);
+  recipe_selected.setOpaque(false);
   
   //Music window
   
@@ -153,13 +162,13 @@ public void createGUI(){
   volume_label.setLocalColorScheme(GCScheme.ORANGE_SCHEME);
   volume_label.setOpaque(false);
   
-  Receipe.loop();
+  Recipe.loop();
   Music.loop();
 }
 
 // Variable declarations 
 // autogenerated do not edit
-GLabel receipe_selected;
+GLabel recipe_selected;
 GKnob Temp; 
 GButton play_button_music;
 GButton pause_button_music;
@@ -167,7 +176,7 @@ GCustomSlider volume;
 GLabel ovenstemp; 
 GKnob time; 
 GLabel timelabel; 
-GWindow Receipe;
+GWindow Recipe;
 ArrayList<GDropList> dropLists = new ArrayList<GDropList>();
 ArrayList<GCustomSlider> ingredient_quantities = new ArrayList<GCustomSlider>();
 ArrayList<GLabel> quantities_label = new ArrayList<GLabel>();
@@ -175,5 +184,5 @@ GCustomSlider oventemp;
 GLabel Ovenslabel; 
 GWindow Music;
 GButton add_ingredient;
-GButton generate_receipes;
+GButton generate_recipes;
 GLabel volume_label;
