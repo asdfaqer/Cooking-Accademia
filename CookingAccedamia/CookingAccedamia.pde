@@ -7,6 +7,7 @@ import java.util.function.Supplier;
 String selectedAppliance = ""; // select the appliance used to cook
 int ovenstemperaure = 50; // set the ovensinitial temperaure
 boolean button_pressed = false; // determine if the button is pressed or not
+ArrayList<Recipe> recipes = new ArrayList<Recipe>();
 ArrayList<Recipe> used_ingredients = new ArrayList<Recipe>();
 
 // input the files such as picures and sound files
@@ -30,8 +31,10 @@ int delay = 40;// how long temparry text stays up
 int frame;
 void setup(){
   size(800,600);
-  chocolate_chip_cookie = new Recipe("chocolate chip cookie",0,0,0,0,250,300,0,100,100,loadImage("chocolate_chip.png"));
+  chocolate_chip_cookie = new Recipe("chocolate chip cookie",0,0,0,0,250,300,0,100,1,loadImage("chocolate_chip.png"));
   cooked_sausages = new Recipe("cooked sausages",0,0,0,0,0,0,1,0,0,loadImage("sausages.png")); // create the recipe
+  recipes.add(chocolate_chip_cookie);
+  recipes.add(cooked_sausages);
   oven = loadImage("openoven.png"); // load image
   cooklo = loadImage("cooklogo.png");// load image
   tray = loadImage("tray.png");

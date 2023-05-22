@@ -50,9 +50,10 @@ public void dropList1_click1(GDropList source, GEvent event) { //_CODE_:dropList
 
 } //_CODE_:dropList1:693695:
 ArrayList <Integer> quantities_values = new ArrayList<Integer>();
-ArrayList <String> grams = new ArrayList<String>(Arrays.asList("Salt","Pepper","Flour","Sugar"));
-ArrayList <String> no_units = new ArrayList<String>(Arrays.asList("Sausages"));
+ArrayList <String> grams = new ArrayList<String>(Arrays.asList("Salt","Pepper","Flour","Sugar","Vanilla extract"));
+ArrayList <String> no_units = new ArrayList<String>(Arrays.asList("Sausages", "Eggs"));
 ArrayList <String> mili_letres = new ArrayList<String>(Arrays.asList("Olive oil", "Vegetable oil"));
+
 public void change_quantities(GCustomSlider source, GEvent event){
   int current_slider_location;
   Recipe.background(230);
@@ -96,6 +97,8 @@ public void button1_click1(GButton source, GEvent event) { //_CODE_:button1:2546
   ingredient_quantities.get(i).setOpaque(false);
   ingredient_quantities.get(i).addEventHandler(this, "change_quantities");
 } //_CODE_:button1:254614:
+
+ArrayList<Recipe> valid_recipes = new ArrayList<Recipe>();
 public void generating_recipes(GButton source, GEvent event){
   Recipe.background(230);
   boolean recipe_found = false;
@@ -103,20 +106,28 @@ public void generating_recipes(GButton source, GEvent event){
     recipe_selected.setText("sorry, but you need to finish your selection");
     return;
   }
-  int num_of_recipes = 1;
-  for(int i = 0; i < num_of_recipes; i++){
-    if(cooked_sausages.criteria_meet() && !recipe_found){
-      recipe_selected.setText("Generated reciepe: sausages");
-      String[] instruction_list = loadStrings("sausages.txt");
-      for(int j = 0; j < instruction_list.length; j++){
-        instructions.add(instruction_list[j]);
-      }
-      print(instructions);
-      step_num = 1;
-      used_ingredients.addAll(cooked_sausages.using_ingredients());
+  //find valid recipes
+  for(Recipe r : recipes){
+    if(r.criteria_meet()){
+      valid_recipes.add(r);
       recipe_found = true;
     }
   }
+  //finds the best match
+  float max_value = 0;
+  float cur_value;
+  Recipe top_recipe = valid_recipes.get(0);//closest match to desired recipe
+  
+  for(Recipe r : valid_recipes){
+    cur_value = r.closeness_to_ingredients_in_possession();
+    if(max_value < cur_value){
+      max_value = cur_value;
+      top_recipe = r;
+    }
+  }
+  //displays the top recipe
+  Recipe.image(top_recipe.image,0,0,width,height);
+  recipe_selected.setText("Recipe recommended" + top_recipe.label);
   if(!recipe_found){
     recipe_selected.setText("sorry, but there are no matchs found");
     return;

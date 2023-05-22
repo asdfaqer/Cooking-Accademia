@@ -8,7 +8,7 @@ class Recipe{
   float flour;
   float sugar;
   float sausages;
-  float egg;
+  float eggs;
   float vanilla;
   PImage image;
   PVector image_location = new PVector(0,0);
@@ -22,7 +22,7 @@ class Recipe{
     this.flour = f;
     this.sugar = su;
     this.sausages = sa;
-    this.egg = eg;
+    this.eggs = eg;
     this.vanilla = vi;
     this.image = im;
   }
@@ -36,7 +36,7 @@ class Recipe{
     boolean need_for_flour;
     boolean need_for_sugar;
     boolean need_for_sausages;
-    boolean need_for_egg;
+    boolean need_for_eggs;
     boolean need_for_vanilla;
     
 
@@ -47,7 +47,7 @@ class Recipe{
     need_for_flour = this.flour>0?true:false; // if this.flour is greater than zero, then return true, else return false
     need_for_sugar = this.sugar>0?true:false;// if this.sugar is greater than zero, then return true, else return false
     need_for_sausages = this.sausages>0?true:false; // // if this.sausages is greater than zero, then return true, else return false
-    need_for_egg = this.egg>0?true:false;
+    need_for_eggs = this.eggs>0?true:false;
     need_for_vanilla = this.vanilla>0?true:false;
     
    
@@ -94,9 +94,9 @@ class Recipe{
           return false;
         }
       }
-      if(ingredients_selected.get(i).equals("Egg")){
-        need_for_egg = false;
-        if(!(quantities_values.get(i) >= this.sausages)){
+      if(ingredients_selected.get(i).equals("Eggs")){
+        need_for_eggs = false;
+        if(!(quantities_values.get(i) >= this.eggs)){
           return false;
         }
       }
@@ -108,7 +108,7 @@ class Recipe{
       }
     }
     
-    if(need_for_salt||need_for_pepper||need_for_olive_oil||need_for_vegetable_oil||need_for_flour||need_for_sugar||need_for_sausages||need_for_egg||need_for_vanilla){
+    if(need_for_salt||need_for_pepper||need_for_olive_oil||need_for_vegetable_oil||need_for_flour||need_for_sugar||need_for_sausages||need_for_eggs||need_for_vanilla){
       return false; // if the requirements for any ingredient are not met
     }
     else{
@@ -123,7 +123,7 @@ class Recipe{
     boolean need_for_flour;
     boolean need_for_sugar;
     boolean need_for_sausages;
-    boolean need_for_egg;
+    boolean need_for_eggs;
     boolean need_for_vanilla;
     ArrayList<Recipe> ingredients_used = new ArrayList<Recipe>();
     
@@ -134,7 +134,7 @@ class Recipe{
     need_for_flour = this.flour>0?true:false; // if this.flour is greater than zero, then return true, else return false
     need_for_sugar = this.sugar>0?true:false;// if this.sugar is greater than zero, then return true, else return false
     need_for_sausages = this.sausages>0?true:false;
-    need_for_egg = this.egg>0?true:false;
+    need_for_eggs = this.eggs>0?true:false;
     need_for_vanilla = this.vanilla>0?true:false;
     
     
@@ -159,12 +159,55 @@ class Recipe{
     if(need_for_sausages){
       ingredients_used.add(new Recipe("sausages",0,0,0,0,0,0,1,0,0,loadImage("sausages.png")));
     }
-    if(need_for_egg){
-      ingredients_used.add(new Recipe("egg",0,0,0,0,0,0,0,1,0,loadImage("egg.png")));
+    if(need_for_eggs){
+      ingredients_used.add(new Recipe("eggs",0,0,0,0,0,0,0,1,0,loadImage("egg.png")));
     }
     if(need_for_vanilla){
       ingredients_used.add(new Recipe("vanilla",0,0,0,0,0,0,0,1,0,loadImage("vanilla.png")));
     }
     return ingredients_used;
+  }
+  
+  float closeness_to_ingredients_in_possession(){
+    float score = 0;
+    String cur_ingredient;
+    float cur_amount;
+    for(int i = 0; i < ingredients_selected.size(); i++){
+      cur_ingredient = ingredients_selected.get(i);
+      // checks if quantitiies_values is null
+      try{
+        cur_amount = quantities_values.get(i);
+      }catch(Exception e){
+        continue;
+      }
+      if(cur_ingredient.equals("Salt")){
+        score += cur_amount - this.salt;
+      }
+      if(cur_ingredient.equals("Pepper")){
+        score += cur_amount - this.pepper;
+      }
+      if(cur_ingredient.equals("Olive oil")){
+        score += cur_amount - this.olive_oil;
+      }
+      if(cur_ingredient.equals("Vegetable oil")){
+        score += cur_amount - this.vegetable_oil;
+      }
+      if(cur_ingredient.equals("Flour")){
+        score += cur_amount - this.flour;
+      }
+      if(cur_ingredient.equals("Sugar")){
+        score += cur_amount - this.sugar;
+      }
+      if(cur_ingredient.equals("Sausages")){
+        score += cur_amount - this.sausages;
+      }
+      if(cur_ingredient.equals("Eggs")){
+        score += cur_amount - this.eggs;
+      }
+      if(cur_ingredient.equals("Vanilla extract")){
+        score += cur_amount - this.vanilla;
+      }
+    }
+    return score;
   }
 }
