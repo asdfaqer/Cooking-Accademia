@@ -1,9 +1,6 @@
 import processing.sound.*;
 import g4p_controls.*;
 import java.awt.*;
-import java.util.*;
-import java.util.function.Supplier;
-
 String selectedAppliance = ""; // select the appliance used to cook
 int ovenstemperaure = 50; // set the ovensinitial temperaure
 boolean button_pressed = false; // determine if the button is pressed or not
@@ -25,12 +22,10 @@ boolean cutting_board_mode = false; // store whether the scene to be displayed i
 
 ArrayList<String> instructions = new ArrayList<String>(); // store all instructions.
 Recipe cooked_sausages;
-Recipe chocolate_chip_cookie;
 int delay = 40;// how long temparry text stays up
 int frame;
 void setup(){
   size(800,600);
-  chocolate_chip_cookie = new Recipe("chocolate chip cookie",0,0,0,0,250,0,0,loadImage("chocolate_chip.png"));
   cooked_sausages = new Recipe("cooked sausages",0,0,0,0,0,0,1,loadImage("sausages.png")); // create the recipe
   oven = loadImage("openoven.png"); // load image
   cooklo = loadImage("cooklogo.png");// load image
