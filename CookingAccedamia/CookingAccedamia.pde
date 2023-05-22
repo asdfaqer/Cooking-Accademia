@@ -30,8 +30,8 @@ int delay = 40;// how long temparry text stays up
 int frame;
 void setup(){
   size(800,600);
-  chocolate_chip_cookie = new Recipe("chocolate chip cookie",0,0,0,0,250,0,0,loadImage("chocolate_chip.png"));
-  cooked_sausages = new Recipe("cooked sausages",0,0,0,0,0,0,1,loadImage("sausages.png")); // create the recipe
+  chocolate_chip_cookie = new Recipe("chocolate chip cookie",0,0,0,0,250,300,0,100,100,loadImage("chocolate_chip.png"));
+  cooked_sausages = new Recipe("cooked sausages",0,0,0,0,0,0,1,0,0,loadImage("sausages.png")); // create the recipe
   oven = loadImage("openoven.png"); // load image
   cooklo = loadImage("cooklogo.png");// load image
   tray = loadImage("tray.png");
@@ -88,6 +88,7 @@ void draw(){
   catch(Exception e){
     
   }
+  int j; //used to control spacing of ingredients when displayed
   //set up scene
   if(cooking_mode){
     print(step_num);
@@ -108,7 +109,7 @@ void draw(){
   else if(add_mode){
     set_up_scene();
     try{
-      int j = 0;
+      j = 0;
       image(tray, 0, 0, width,height);
       for(Recipe i: used_ingredients){
         j++;
@@ -121,8 +122,12 @@ void draw(){
   else if(mix_mode){
     set_up_scene();
     try{
-      //image(mixer, 0, 0, width, height);
-      image(cooked_sausages.image, cooked_sausages.image_location.x - width/10, cooked_sausages.image_location.y - height/10, width/5, height/5);
+      j=0;
+      image(mixer, 0, 0, width, height);
+      for(Recipe i: used_ingredients){
+        j++;
+        image(i.image, i.image_location.x - width/10 + j * 30 , i.image_location.y - height/10, width/5, height/5);
+      }
     }
     catch(Exception e){}
   }

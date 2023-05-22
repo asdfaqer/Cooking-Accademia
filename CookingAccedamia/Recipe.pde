@@ -8,10 +8,12 @@ class Recipe{
   float flour;
   float sugar;
   float sausages;
+  float egg;
+  float vanilla;
   PImage image;
   PVector image_location = new PVector(0,0);
   // consturctor to construct the fields needed
-  Recipe(String l, float s, float p, float o, float v, float f, float su, float sa, PImage im){
+  Recipe(String l, float s, float p, float o, float v, float f, float su, float sa, float eg, float vi, PImage im){
     this.label = l;
     this.salt = s;
     this.pepper = p;
@@ -20,6 +22,8 @@ class Recipe{
     this.flour = f;
     this.sugar = su;
     this.sausages = sa;
+    this.egg = eg;
+    this.vanilla = vi;
     this.image = im;
   }
   //methods
@@ -32,6 +36,8 @@ class Recipe{
     boolean need_for_flour;
     boolean need_for_sugar;
     boolean need_for_sausages;
+    boolean need_for_egg;
+    boolean need_for_vanilla;
     
 
     need_for_salt = this.salt>0?true:false; // if this.salt is greater than zero, then return true, else return false
@@ -41,6 +47,9 @@ class Recipe{
     need_for_flour = this.flour>0?true:false; // if this.flour is greater than zero, then return true, else return false
     need_for_sugar = this.sugar>0?true:false;// if this.sugar is greater than zero, then return true, else return false
     need_for_sausages = this.sausages>0?true:false; // // if this.sausages is greater than zero, then return true, else return false
+    need_for_egg = this.egg>0?true:false;
+    need_for_vanilla = this.vanilla>0?true:false;
+    
    
     for(int i = 0; i < ingredients_selected.size()&& i < quantities_values.size(); i++){
       if(ingredients_selected.get(i).equals("Salt")){ // if the user selected salt
@@ -85,11 +94,22 @@ class Recipe{
           return false;
         }
       }
+      if(ingredients_selected.get(i).equals("Egg")){
+        need_for_egg = false;
+        if(!(quantities_values.get(i) >= this.sausages)){
+          return false;
+        }
+      }
+      if(ingredients_selected.get(i).equals("Vanilla extract")){
+        need_for_vanilla = false;
+        if(!(quantities_values.get(i) >= this.sausages)){
+          return false;
+        }
+      }
     }
     
-    if(need_for_salt||need_for_pepper||need_for_olive_oil||need_for_vegetable_oil||need_for_flour||need_for_sugar||need_for_sausages){
-      return false; // if we do not need any of the ingredients
-      // return false
+    if(need_for_salt||need_for_pepper||need_for_olive_oil||need_for_vegetable_oil||need_for_flour||need_for_sugar||need_for_sausages||need_for_egg||need_for_vanilla){
+      return false; // if the requirements for any ingredient are not met
     }
     else{
       return true;
@@ -103,6 +123,8 @@ class Recipe{
     boolean need_for_flour;
     boolean need_for_sugar;
     boolean need_for_sausages;
+    boolean need_for_egg;
+    boolean need_for_vanilla;
     ArrayList<Recipe> ingredients_used = new ArrayList<Recipe>();
     
     need_for_salt = this.salt>0?true:false; // if this.salt is greater than zero, then return true, else return false
@@ -112,27 +134,36 @@ class Recipe{
     need_for_flour = this.flour>0?true:false; // if this.flour is greater than zero, then return true, else return false
     need_for_sugar = this.sugar>0?true:false;// if this.sugar is greater than zero, then return true, else return false
     need_for_sausages = this.sausages>0?true:false;
+    need_for_egg = this.egg>0?true:false;
+    need_for_vanilla = this.vanilla>0?true:false;
+    
     
     if(need_for_salt){
-      ingredients_used.add(new Recipe("salt",1,0,0,0,0,0,0,loadImage("salt.png")));
+      ingredients_used.add(new Recipe("salt",1,0,0,0,0,0,0,0,0,loadImage("salt.png")));
     }
     if(need_for_pepper){
-      ingredients_used.add(new Recipe("pepper",0,1,0,0,0,0,0,loadImage("pepper.png")));
+      ingredients_used.add(new Recipe("pepper",0,1,0,0,0,0,0,0,0,loadImage("pepper.png")));
     }
     if(need_for_olive_oil){
-      ingredients_used.add(new Recipe("olive oil",0,0,1,0,0,0,0,loadImage("oliveoil.png")));
+      ingredients_used.add(new Recipe("olive oil",0,0,1,0,0,0,0,0,0,loadImage("oliveoil.png")));
     }
     if(need_for_vegetable_oil){
-      ingredients_used.add(new Recipe("vegetable oil",0,0,0,1,0,0,0,loadImage("vegetableoil.png")));
+      ingredients_used.add(new Recipe("vegetable oil",0,0,0,1,0,0,0,0,0,loadImage("vegetableoil.png")));
     }
     if(need_for_flour){
-      ingredients_used.add(new Recipe("flour",0,0,0,0,1,0,0,loadImage("flour.png")));
+      ingredients_used.add(new Recipe("flour",0,0,0,0,1,0,0,0,0,loadImage("flour.png")));
     }
     if(need_for_sugar){
-      ingredients_used.add(new Recipe("sugar",0,0,0,0,0,1,0,loadImage("sugar.png")));
+      ingredients_used.add(new Recipe("sugar",0,0,0,0,0,1,0,0,0,loadImage("sugar.png")));
     }
     if(need_for_sausages){
-      ingredients_used.add(new Recipe("sausages",0,0,0,0,0,0,1,loadImage("sausages.png")));
+      ingredients_used.add(new Recipe("sausages",0,0,0,0,0,0,1,0,0,loadImage("sausages.png")));
+    }
+    if(need_for_egg){
+      ingredients_used.add(new Recipe("egg",0,0,0,0,0,0,0,1,0,loadImage("egg.png")));
+    }
+    if(need_for_vanilla){
+      ingredients_used.add(new Recipe("vanilla",0,0,0,0,0,0,0,1,0,loadImage("vanilla.png")));
     }
     return ingredients_used;
   }
