@@ -18,7 +18,7 @@ int step_num = 0;
  //_CODE_:time:476537:
 public void recipe_complete(){
   background(0);
-  task_recipe_completion.setText("recipe COMPLETED");
+  task_recipe_completion.setText("RECIPE COMPLETED");
 }
 public void task_complete(){
   background(0);
@@ -60,18 +60,17 @@ public void change_quantities(GCustomSlider source, GEvent event){
   quantities_values.clear();
   for( int j = 0; j <= i; j++){
     if(grams.contains(ingredients_selected.get(j))){
-      println("ok");
       current_slider_location = ingredient_quantities.get(j).getValueI();
-      ingredient_quantities.get(j).setLimits(current_slider_location,10,500);
+      ingredient_quantities.get(j).setLimits(current_slider_location,0,500);
       quantities_values.add(ingredient_quantities.get(j).getValueI());
       quantities_label.get(j).setText(quantities_values.get(j) + " g");
     }
     else if(no_units.contains(ingredients_selected.get(j))){
       current_slider_location = ingredient_quantities.get(j).getValueI();
-      if(current_slider_location > 10){
-        current_slider_location = current_slider_location / 50;
+      if(current_slider_location > 12){
+        current_slider_location = current_slider_location / 42;// rescale the slider
       }
-      ingredient_quantities.get(j).setLimits(current_slider_location,0,10);
+      ingredient_quantities.get(j).setLimits(current_slider_location,0,12);
       quantities_values.add(ingredient_quantities.get(j).getValueI());
       quantities_label.get(j).setText(str(quantities_values.get(j)));
     }
@@ -88,14 +87,14 @@ public void change_quantities(GCustomSlider source, GEvent event){
 public void button1_click1(GButton source, GEvent event) { //_CODE_:button1:254614:
   i++;
   Recipe.background(230);
-  dropLists.add(new GDropList(Recipe, 29, 60+ 40*i, 90, 80, 3, 10));
+  dropLists.add(new GDropList(Recipe, 29, 60+ 40*i, 90, 80, 3, 15));
   dropLists.get(i).setItems(loadStrings("list_374668"), 0);
   dropLists.get(i).addEventHandler(this, "dropList1_click1");
   println("button1 - GButton >> GEvent." + event + " @ " + millis());
   quantities_label.add(new GLabel(Recipe, 120, 40 + 40 * i, 100, 50));
   quantities_label.get(i).setText("N/A");
   ingredient_quantities.add(new GCustomSlider(Recipe, 120, 60 + 40*i, 100, 40, "grey_blue"));
-  ingredient_quantities.get(i).setLimits(0.0, 10.0, 500.0);
+  ingredient_quantities.get(i).setLimits(0.0, 0.0, 500.0);
   ingredient_quantities.get(i).setNumberFormat(G4P.DECIMAL, 2);
   ingredient_quantities.get(i).setOpaque(false);
   ingredient_quantities.get(i).addEventHandler(this, "change_quantities");
@@ -104,7 +103,15 @@ String text_selected;
 
 public void possible_recipes(GDropList source, GEvent event){
   text_selected = source.getSelectedText();
+  for(Recipe r: recipes){
+      if( r.label.equals(text_selected)){
+        cur_recipe = r;
+        break;
+      }
+  }
   recipe_selected.setText("selected recipe" + text_selected);
+  Recipe.background(230);
+  Recipe.image(cur_recipe.image,300,0,width/3,height/3);
   instructions.clear();
 }
 
@@ -116,16 +123,10 @@ public void simulate_recipe(GButton source, GEvent event){
   for(int i = 0; i<instructions_array.length; i ++){
     instructions.add(instructions_array[i]);
   }
- // find the current recipe
-  for(Recipe r: recipes){
-      if( r.label.equals(text_selected)){
-        cur_recipe = r;
-        break;
-      }
-  }
+  // find the current recipe
   //update used ingredients 
   used_ingredients = new ArrayList<Recipe>( cur_recipe.using_ingredients() );
-  println(instructions);
+  println(cur_recipe.using_ingredients().get(0).label);
 }
 
 ArrayList<Recipe> valid_recipes = new ArrayList<Recipe>();
@@ -184,7 +185,7 @@ public void createGUI(){
   Recipe.noLoop();
   Recipe.setActionOnClose(G4P.KEEP_OPEN);
   Recipe.addDrawHandler(this, "Recipe_Window");
-  recipe_options = new GDropList(Recipe, 600, 60, 90, 80, 3, 20);
+  recipe_options = new GDropList(Recipe, 600, 60, 90, 80, 3, 15);
   recipe_options.setItems(loadStrings("possible_recipes"), 0);
   recipe_options.addEventHandler(this, "possible_recipes");
   recipe_options.addItem("select recipe");
@@ -202,7 +203,7 @@ public void createGUI(){
   generate_recipes.setText("generate recipes");
   generate_recipes.addEventHandler(this, "generating_recipes");
   ingredient_quantities.add(new GCustomSlider(Recipe, 120, 60, 100, 40, "grey_blue"));
-  ingredient_quantities.get(0).setLimits(0.0, 10.0, 500.0);
+  ingredient_quantities.get(0).setLimits(0.0, 0.0, 500.0);
   ingredient_quantities.get(0).setNumberFormat(G4P.DECIMAL, 2);
   ingredient_quantities.get(0).setOpaque(false);
   ingredient_quantities.get(0).addEventHandler(this, "change_quantities");
@@ -210,6 +211,10 @@ public void createGUI(){
   recipe_selected = new GLabel(Recipe, 126, 222, 300, 100);
   recipe_selected.setTextAlign(GAlign.CENTER, GAlign.MIDDLE);
   recipe_selected.setOpaque(false);
+  label2 = new GLabel(Recipe, 27, 35, 300, 20);
+  label2.setTextAlign(GAlign.LEFT, GAlign.MIDDLE);
+  label2.setText("I n g r e d i e n t s   i n  p o s s e s s i o n :");
+  label2.setOpaque(false);
   
   //Music window
   
@@ -262,3 +267,4 @@ GWindow Music;
 GButton add_ingredient;
 GButton generate_recipes;
 GLabel volume_label;
+GLabel label2;

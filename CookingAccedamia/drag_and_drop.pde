@@ -1,15 +1,26 @@
 void mouseDragged(){
-  if(!add_mode){
+  if(!add_mode && !mix_mode){
     return;
   }
   for(Recipe i : current_requirement){
-    if(PVector.sub(i.image_location, new PVector(mouseX, mouseY)).mag()<50){ // using PVectors change the locationof the image
-      i.image_location = new PVector(mouseX, mouseY); // the new location is the locationof the mouse
+    print(i.label);
+    if(PVector.sub(i.image_location, new PVector(mouseX, mouseY)).mag()<60){ // using PVectors change the location of the image
+      i.image_location = new PVector(mouseX, mouseY); // the new location is the location of the mouse
     }
-    if(i.image_location.x < 550 && i.image_location.x > 50 && !task_completed){ // if the image of sausage is in the middle plate
-      if(i.image_location.y < 450 && i.image_location.y > 200){
-        i.image_location = new PVector(width/2, height/2); // move the picture there
-        i.completed = true;
+    if(add_mode){
+      if(i.image_location.x < 4 * width/5 && i.image_location.x > width/5 && !task_completed){ // if the image of sausage is in the middle plate
+        if(i.image_location.y < 4 * height/5 && i.image_location.y > height/5){
+          i.image_location = new PVector(width/2, height/2); // move the picture there
+          i.completed = true;
+        }
+      }
+    }
+    if(mix_mode){
+      if(i.image_location.x < 4 * width/5 && i.image_location.x > width/5 && !task_completed){ // if the image of sausage is in the middle plate
+        if(i.image_location.y < 4 * height/5 && i.image_location.y > height/5){
+          i.image_location = new PVector(width/2, height/2); // move the picture there
+          i.completed = true;
+        }
       }
     }
   }
@@ -18,8 +29,14 @@ void mouseDragged(){
       return;
     }
   }
+  if(task_completed){
+    return;
+  }
   task_complete(); // call the task complete function
   task_completed = true;
   step_num++;
   add_mode = false;
+  mix_mode = false;
+  cooking_mode = false;
+  
 }
