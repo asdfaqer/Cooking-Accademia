@@ -12,6 +12,7 @@ class Recipe{
   float vanilla;
   PImage image;
   PVector image_location = new PVector(0,0);
+  boolean completed = false;
   // consturctor to construct the fields needed
   Recipe(String l, float s, float p, float o, float v, float f, float su, float sa, float eg, float vi, PImage im){
     this.label = l;

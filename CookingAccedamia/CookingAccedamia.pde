@@ -27,14 +27,14 @@ boolean cutting_board_mode = false; // store whether the scene to be displayed i
 ArrayList<String> instructions = new ArrayList<String>(); // store all instructions.
 Recipe cooked_sausages;
 Recipe chocolate_chip_cookie;
-int delay = 40;// how long temparry text stays up
+int delay = 40;// how long temporary text stays up
 int frame;
 PrintWriter possible_recipes;
 
 void setup(){
   size(800,600);
-  chocolate_chip_cookie = new Recipe("chocolate chip cookie",0,0,0,0,250,300,0,100,1,loadImage("chocolate_chip.png"));
-  cooked_sausages = new Recipe("cooked sausages",0,0,0,0,0,0,1,0,0,loadImage("sausages.png")); // create the recipe
+  chocolate_chip_cookie = new Recipe("chocolate chip cookie",0,0,0,0,250,300,0,1,100,loadImage("chocolate_chip.png"));
+  cooked_sausages = new Recipe("cooked sausages",0,0,0,0,0,0,1,0,0,loadImage("cooked_sausages.png")); // create the recipe
   recipes.add(chocolate_chip_cookie);
   recipes.add(cooked_sausages);
   oven = loadImage("openoven.png"); // load image
@@ -58,6 +58,7 @@ void setup(){
 
 boolean scene_setup = false;
 String cur_instruction; // store the current instruction selected
+ArrayList <Recipe> current_requirement = new ArrayList <Recipe>();
 void draw(){
   frame++;
   //image(cooklo,0,0,width,height);
@@ -90,6 +91,7 @@ void draw(){
       background(0);
       cur_instruction_label.setText("STEP #" + str(step_num) + ":\n" + cur_instruction.substring(5,cur_instruction.length()));
     }
+    
   }
   catch(Exception e){
     
@@ -118,6 +120,11 @@ void draw(){
       j = 0;
       image(tray, 0, 0, width,height);
       for(Recipe i: used_ingredients){
+        if(cur_instruction.indexOf(i.label) != -1){
+          current_requirement.add(i);
+        }
+      }
+      for(Recipe i: used_ingredients){
         j++;
         image(i.image, i.image_location.x - width/10 + j * 30 , i.image_location.y - height/10, width/5, height/5);
       }
@@ -131,6 +138,11 @@ void draw(){
       j=0;
       image(mixer, 0, 0, width, height);
       for(Recipe i: used_ingredients){
+        if(cur_instruction.indexOf(i.label) != -1){
+          current_requirement.add(i);
+        }
+      }
+      for(Recipe i: current_requirement){
         j++;
         image(i.image, i.image_location.x - width/10 + j * 30 , i.image_location.y - height/10, width/5, height/5);
       }

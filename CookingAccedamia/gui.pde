@@ -68,6 +68,9 @@ public void change_quantities(GCustomSlider source, GEvent event){
     }
     else if(no_units.contains(ingredients_selected.get(j))){
       current_slider_location = ingredient_quantities.get(j).getValueI();
+      if(current_slider_location > 10){
+        current_slider_location = current_slider_location / 50;
+      }
       ingredient_quantities.get(j).setLimits(current_slider_location,0,10);
       quantities_values.add(ingredient_quantities.get(j).getValueI());
       quantities_label.get(j).setText(str(quantities_values.get(j)));
@@ -89,7 +92,7 @@ public void button1_click1(GButton source, GEvent event) { //_CODE_:button1:2546
   dropLists.get(i).setItems(loadStrings("list_374668"), 0);
   dropLists.get(i).addEventHandler(this, "dropList1_click1");
   println("button1 - GButton >> GEvent." + event + " @ " + millis());
-  quantities_label.add(new GLabel(Recipe, 120, 40 + 40* i, 100, 50));
+  quantities_label.add(new GLabel(Recipe, 120, 40 + 40 * i, 100, 50));
   quantities_label.get(i).setText("N/A");
   ingredient_quantities.add(new GCustomSlider(Recipe, 120, 60 + 40*i, 100, 40, "grey_blue"));
   ingredient_quantities.get(i).setLimits(0.0, 10.0, 500.0);
@@ -98,6 +101,7 @@ public void button1_click1(GButton source, GEvent event) { //_CODE_:button1:2546
   ingredient_quantities.get(i).addEventHandler(this, "change_quantities");
 } //_CODE_:button1:254614:
 String text_selected;
+
 public void possible_recipes(GDropList source, GEvent event){
   text_selected = source.getSelectedText();
   recipe_selected.setText("selected recipe" + text_selected);
