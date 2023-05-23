@@ -29,6 +29,8 @@ Recipe cooked_sausages;
 Recipe chocolate_chip_cookie;
 int delay = 40;// how long temparry text stays up
 int frame;
+PrintWriter possible_recipes;
+
 void setup(){
   size(800,600);
   chocolate_chip_cookie = new Recipe("chocolate chip cookie",0,0,0,0,250,300,0,100,1,loadImage("chocolate_chip.png"));
@@ -40,6 +42,7 @@ void setup(){
   tray = loadImage("tray.png");
   sausages = loadImage("sausages.png");
   mixer = loadImage("mixer.png");
+  possible_recipes = createWriter("possible_recipes.txt");
   
   //music window
   songImage = loadImage("Cool Out Son Image.PNG");// load image
@@ -208,7 +211,8 @@ void create_start_button(){
   
   
 }
-// create button manually using different documentation
+
+// create buttons
 GButton start_button;
 GLabel cur_instruction_label;
 GLabel task_recipe_completion;
