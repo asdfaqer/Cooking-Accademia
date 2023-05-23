@@ -139,41 +139,41 @@ class Recipe{
     
     
     if(need_for_salt){
-      ingredients_used.add(new Recipe("salt",1,0,0,0,0,0,0,0,0,loadImage("salt.png")));
+      ingredients_used.add(new Recipe("salt",1,0,0,0,0,0,0,0,0,loadImage("salt.png"))); // add images of the salt
     }
     if(need_for_pepper){
-      ingredients_used.add(new Recipe("pepper",0,1,0,0,0,0,0,0,0,loadImage("pepper.png")));
+      ingredients_used.add(new Recipe("pepper",0,1,0,0,0,0,0,0,0,loadImage("pepper.png"))); // add images of the pepper
     }
     if(need_for_olive_oil){
-      ingredients_used.add(new Recipe("olive oil",0,0,1,0,0,0,0,0,0,loadImage("oliveoil.png")));
+      ingredients_used.add(new Recipe("olive oil",0,0,1,0,0,0,0,0,0,loadImage("oliveoil.png"))); // add images of the oliveoil 
     }
     if(need_for_vegetable_oil){
-      ingredients_used.add(new Recipe("vegetable oil",0,0,0,1,0,0,0,0,0,loadImage("vegetableoil.png")));
+      ingredients_used.add(new Recipe("vegetable oil",0,0,0,1,0,0,0,0,0,loadImage("vegetableoil.png"))); // add images of the vegetableoil
     }
     if(need_for_flour){
-      ingredients_used.add(new Recipe("flour",0,0,0,0,1,0,0,0,0,loadImage("flour.png")));
+      ingredients_used.add(new Recipe("flour",0,0,0,0,1,0,0,0,0,loadImage("flour.png"))); // add images of the flour
     }
     if(need_for_sugar){
-      ingredients_used.add(new Recipe("sugar",0,0,0,0,0,1,0,0,0,loadImage("sugar.png")));
+      ingredients_used.add(new Recipe("sugar",0,0,0,0,0,1,0,0,0,loadImage("sugar.png"))); // add images of the sugar
     }
     if(need_for_sausages){
-      ingredients_used.add(new Recipe("sausages",0,0,0,0,0,0,1,0,0,loadImage("sausages.png")));
+      ingredients_used.add(new Recipe("sausages",0,0,0,0,0,0,1,0,0,loadImage("sausages.png"))); // add images of the sausage
     }
     if(need_for_eggs){
-      ingredients_used.add(new Recipe("eggs",0,0,0,0,0,0,0,1,0,loadImage("egg.png")));
+      ingredients_used.add(new Recipe("eggs",0,0,0,0,0,0,0,1,0,loadImage("egg.png"))); // add images of the egg
     }
     if(need_for_vanilla){
-      ingredients_used.add(new Recipe("vanilla",0,0,0,0,0,0,0,1,0,loadImage("vanilla.png")));
+      ingredients_used.add(new Recipe("vanilla",0,0,0,0,0,0,0,1,0,loadImage("vanilla.png"))); // add images of the vanilla
     }
     return ingredients_used;
   }
   
-  float closeness_to_ingredients_in_possession(){
+  float closeness_to_ingredients_in_possession(){ // judge how close the recipe matches the ingreidents in position
     float score = 0;
     String cur_ingredient;
     float cur_amount;
     for(int i = 0; i < ingredients_selected.size(); i++){
-      cur_ingredient = ingredients_selected.get(i);
+      cur_ingredient = ingredients_selected.get(i); // select the ingreident user picked
       // checks if quantitiies_values is null
       try{
         cur_amount = quantities_values.get(i);
