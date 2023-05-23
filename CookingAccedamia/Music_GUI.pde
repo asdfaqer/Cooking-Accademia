@@ -3,12 +3,12 @@ synchronized public void Music_Window(PApplet appc, GWinData data) { //_CODE_:Mu
   appc.image(songImage, 50, 10, 200 ,200);
 } 
 public void play_music(GButton source, GEvent event){
-  Song.pause();
-  Song.play();
+  Song.pause(); // pause the music
+  Song.play(); // play the music
 }
 public void pause_music(GButton source, GEvent event){
   Song.pause();
 }
 public void change_volume(GCustomSlider source, GEvent event){
-  Song.amp(source.getValueF());
+  Song.amp(source.getValueF()); // motify the volume of the music
 }
