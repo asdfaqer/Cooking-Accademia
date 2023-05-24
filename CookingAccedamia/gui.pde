@@ -231,8 +231,8 @@ public void createGUI(){
   example1.setText("Cooked Sausages");
   example1.addEventHandler(this, "set_ingredients_cooked_sausages");
   example2 = new GButton(Recipe, 400 , 40, 80, 30);
-  example2.setText("Chocolate Chip Cookie");
-  example2.addEventHandler(this, "set_ingredients_chocolate_chip_cookie");
+  example2.setText("Chocolate Chip Cookies");
+  example2.addEventHandler(this, "set_ingredients_chocolate_chip_cookies");
   
   //Music window
   

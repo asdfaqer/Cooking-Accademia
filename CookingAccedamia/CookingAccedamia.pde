@@ -23,19 +23,26 @@ boolean cooking_mode = false; // store whether the scene to be displayed is the 
 boolean add_mode = false; // store whether the scene to be displayed is the tray scene
 boolean mix_mode = false; // store whether the scene to be displayed is the mixer scene
 boolean cutting_board_mode = false; // store whether the scene to be displayed is the cutting board scene
+boolean mixer_state = false;
+boolean starting_value = true;
 
 ArrayList<String> instructions = new ArrayList<String>(); // store all instructions.
 Recipe cooked_sausages;
-Recipe chocolate_chip_cookie;
+Recipe chocolate_chip_cookies;
+//raw varrients of above (exist because they are useful for drag and drop minigames)
+Recipe sausages_raw;
+Recipe chocolate_chip_cookies_raw;
 int delay = 40;// how long temporary text stays up
 int frame;
 PrintWriter possible_recipes;
 
 void setup(){
   size(800,600);
-  chocolate_chip_cookie = new Recipe("chocolate chip cookie",0,0,0,0,250,300,0,1,100,loadImage("chocolate_cookies.png"), loadImage("chocolate_cookies_raw.png"));
-  cooked_sausages = new Recipe("cooked sausages",0,0,0,0,0,0,1,0,0,loadImage("cooked_sausages.png"), loadImage("sausages.png")); // create the recipe
-  recipes.add(chocolate_chip_cookie);
+  sausages_raw = new Recipe(loadImage("sausages.png"));
+  chocolate_chip_cookies_raw = new Recipe(loadImage("raw_chocolate_cookies.png"));
+  chocolate_chip_cookies = new Recipe("chocolate chip cookies",0,0,0,0,250,300,0,1,100,loadImage("chocolate_cookies.png"), chocolate_chip_cookies_raw);
+  cooked_sausages = new Recipe("cooked sausages",0,0,0,0,0,0,1,0,0,loadImage("cooked_sausages.png"), sausages_raw); // create the recipe
+  recipes.add(chocolate_chip_cookies);
   recipes.add(cooked_sausages);
   load_images();// loads all images used in draw
   
@@ -67,6 +74,7 @@ void draw(){
   // set all modes to false
   cooking_mode = false;
   add_mode = false;
+  mix_mode = false;
   
   try{
     cur_instruction = instructions.get(step_num-1);
@@ -93,7 +101,6 @@ void draw(){
   int j; //used to control spacing of ingredients when displayed
   //set up scene
   if(cooking_mode){
-    print(step_num);
     if(!scene_setup){
       set_up_scene();
       scene_setup = true;
@@ -108,22 +115,24 @@ void draw(){
       target_time = int(cur_instruction.substring(14, cur_instruction.indexOf("min")-1)); // the user need to drag the knob ot change the time
     }
     if(cur_instruction.substring(5,10).equals("place")){
-      
+      if(!current_requirements_found){
+        current_requirement.clear();
+        current_requirement.add(cur_recipe.uncooked_version);
+        current_requirements_found = true;
+      }
     }
   }
   else if(add_mode){
-    set_up_scene();
+    if(!scene_setup){
+      set_up_scene();
+      scene_setup = true;
+    }
     j = 0;
     image(tray, 0, 0, width,height);
     if(!current_requirements_found){
-      for(Recipe i: used_ingredients){
-        print(i.label);
-        if(cur_instruction.indexOf(i.label) != -1){
-          current_requirement.add(i);
-        }
-        current_requirements_found = true;
-      }
-      println(current_requirement);
+      current_requirement.clear();
+      current_requirement.add(cur_recipe.uncooked_version);
+      current_requirements_found = true;
     }
     for(Recipe i: current_requirement){
       i.image_location.x = i.image_location.x + j*100;
@@ -132,23 +141,41 @@ void draw(){
     }
   }
   else if(mix_mode){
-    set_up_scene();
-    j=0;
+    if(!scene_setup){
+      set_up_scene();
+      scene_setup = true;
+    }
+    
     image(mixer, 0, 0, width, height);
-    if(!current_requirements_found){
-      for(Recipe i: used_ingredients){
-        if(cur_instruction.indexOf(i.label) != -1){
-          current_requirement.add(i);
+    if(cur_instruction.substring(6,11).equals("cream")){
+      if(num_pressed == 3){
+        num_pressed = 0; // allows the button to be pressed and complete the task by doing so
+      }
+    }
+    else{
+      if(!current_requirements_found){
+        for(Recipe i: used_ingredients){
+          if(cur_instruction.indexOf(i.label) != -1){
+            current_requirement.add(i);
+          }
         }
         current_requirements_found = true;
+      }
+      j=0;
+      for(Recipe i: current_requirement){
+        if(starting_value){
+        i.image_location.x = j * 100;
+        }
+        image(i.image, i.image_location.x - width/10 + j * 100 , i.image_location.y - height/10, width/5, height/5);
+        j++;
+      }
+      starting_value = false;
     }
-    println(current_requirement.get(0).label);
-    }
-    for(Recipe i: current_requirement){
-      i.image_location.x = i.image_location.x + j * 100;
-      image(i.image, i.image_location.x - width/10 + j * 100 , i.image_location.y - height/10, width/5, height/5);
-      j++;
-    }
+  }
+  else if(!instructions.isEmpty() && !(step_num -1 >= instructions.size())){
+    scene_setup = false;
+    instructions.remove(step_num-1);
+    println(step_num);
   }
 }
 
@@ -214,6 +241,28 @@ void set_up_scene(){
     cur_instruction_label.setFont(new Font("Monospaced", Font.PLAIN, 30));
     cur_instruction_label.setLocalColorScheme(GCScheme.YELLOW_SCHEME);
   }
+  if(mix_mode){
+    mixer_on_off = new GButton(this,575,350,80,30);
+    mixer_on_off.setText("ON");
+    mixer_on_off.addEventHandler(this,"mixer_state_change");
+  }
+}
+int num_pressed = 3;
+void mixer_state_change(GButton source, GEvent event){
+  num_pressed++;
+  mixer_state = !mixer_state;//true  = on, false = off
+  if(mixer_state){
+    mixer_on_off.setText("ON");
+  }else{
+  mixer_on_off.setText("OFF");
+  }
+  println(num_pressed);
+  if(num_pressed == 2){
+    task_complete();
+    num_pressed = 3;
+    mixer_state = false;
+    step_num++;
+  }
 }
 
 void create_start_button(){
@@ -226,6 +275,7 @@ void create_start_button(){
 }
 
 // create buttons
+GButton mixer_on_off;
 GButton start_button;
 GLabel cur_instruction_label;
 GLabel task_recipe_completion;

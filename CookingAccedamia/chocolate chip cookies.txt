@@ -1,9 +1,11 @@
 mixer put sugar and butter together into the mixer
-mixer cream together the sugar and butter in the mixer
+mixer cream together the ingredients (turn on and off mixer)
 mixer put vanilla and eggs in mixer as well
-mixer put chocolate chips in mixer
-mixer cream together
+mixer put chocolate in mixer
+mixer cream together the ingredients
+ 
 tray place chocolate chips cookies in tray
+ 
 oven place chocolate chips cookies in oven
 oven heat to 350 C
 oven set timer for 15 min

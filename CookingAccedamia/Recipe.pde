@@ -11,11 +11,11 @@ class Recipe{
   float eggs;
   float vanilla;
   PImage image;
-  PImage uncooked_version;
+  Recipe uncooked_version;
   PVector image_location = new PVector(0,50);
   boolean completed = false;
   // consturctor to construct the fields needed
-  Recipe(String l, float s, float p, float o, float v, float f, float su, float sa, float eg, float vi, PImage im, PImage un){
+  Recipe(String l, float s, float p, float o, float v, float f, float su, float sa, float eg, float vi, PImage im, Recipe un){
     this.label = l;
     this.salt = s;
     this.pepper = p;
@@ -40,6 +40,9 @@ class Recipe{
     this.sausages = sa;
     this.eggs = eg;
     this.vanilla = vi;
+    this.image = im;
+  }
+  Recipe(PImage im){
     this.image = im;
   }
   //methods

@@ -1,9 +1,8 @@
 void mouseDragged(){
-  if(!add_mode && !mix_mode){
+  if(current_requirement.isEmpty()){
     return;
   }
   for(Recipe i : current_requirement){
-    print(i.label);
     if(PVector.sub(i.image_location, new PVector(mouseX, mouseY)).mag()<60){ // using PVectors change the location of the image
       i.image_location = new PVector(mouseX, mouseY); // the new location is the location of the mouse
     }
@@ -38,5 +37,6 @@ void mouseDragged(){
   add_mode = false;
   mix_mode = false;
   cooking_mode = false;
-  
+  current_requirement.clear();
+  current_requirements_found = false;
 }

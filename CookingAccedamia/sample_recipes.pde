@@ -17,7 +17,7 @@ public void set_ingredients_cooked_sausages(GButton source, GEvent event){
   }
 }
 int hidden_i = 0;
-public void set_ingredients_chocolate_chip_cookie(GButton source, GEvent event){
+public void set_ingredients_chocolate_chip_cookies(GButton source, GEvent event){
   int t = 0;
   quantities_values.clear();
   dropLists.get(0).setSelected(5);
