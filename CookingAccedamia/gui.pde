@@ -58,7 +58,7 @@ public void change_quantities(GCustomSlider source, GEvent event){
   int current_slider_location;
   Recipe.background(230);
   quantities_values.clear();
-  for( int j = 0; j <= i; j++){
+  for( int j = 0; j<=i; j++){
     if(grams.contains(ingredients_selected.get(j))){
       current_slider_location = ingredient_quantities.get(j).getValueI();
       ingredient_quantities.get(j).setLimits(current_slider_location,0,500);
@@ -87,6 +87,8 @@ public void change_quantities(GCustomSlider source, GEvent event){
 public void button1_click1(GButton source, GEvent event) { //_CODE_:button1:254614:
   i++;
   Recipe.background(230);
+  //check if new ingredient was already created or new
+  if(i>=hidden_i){
   dropLists.add(new GDropList(Recipe, 29, 60+ 40*i, 90, 80, 3, 15));
   dropLists.get(i).setItems(loadStrings("list_374668"), 0);
   dropLists.get(i).addEventHandler(this, "dropList1_click1");
@@ -98,6 +100,16 @@ public void button1_click1(GButton source, GEvent event) { //_CODE_:button1:2546
   ingredient_quantities.get(i).setNumberFormat(G4P.DECIMAL, 2);
   ingredient_quantities.get(i).setOpaque(false);
   ingredient_quantities.get(i).addEventHandler(this, "change_quantities");
+  }else{
+    dropLists.get(i).setAlpha(255);
+    dropLists.get(i).setSelected(0);
+    quantities_label.get(i).setAlpha(255);
+    quantities_label.get(i).setText("N/A");
+    ingredient_quantities.get(i).setAlpha(255);
+    ingredient_quantities.get(i).setLimits(0.0, 0.0, 500.0);
+    ingredient_quantities.get(i).setNumberFormat(G4P.DECIMAL, 2);
+    ingredient_quantities.get(i).setOpaque(false);
+  }
 } //_CODE_:button1:254614:
 String text_selected;
 
@@ -218,6 +230,12 @@ public void createGUI(){
   label2.setTextAlign(GAlign.LEFT, GAlign.MIDDLE);
   label2.setText("I n g r e d i e n t s   i n  p o s s e s s i o n :");
   label2.setOpaque(false);
+  example1 = new GButton(Recipe, 300 , 40, 80, 30);
+  example1.setText("Cooked Sausages");
+  example1.addEventHandler(this, "set_ingredients_cooked_sausages");
+  example2 = new GButton(Recipe, 400 , 40, 80, 30);
+  example2.setText("Chocolate Chip Cookie");
+  example2.addEventHandler(this, "set_ingredients_chocolate_chip_cookie");
   
   //Music window
   
@@ -273,3 +291,5 @@ GButton add_ingredient;
 GButton generate_recipes;
 GLabel volume_label;
 GLabel label2;
+GButton example1;
+GButton example2;

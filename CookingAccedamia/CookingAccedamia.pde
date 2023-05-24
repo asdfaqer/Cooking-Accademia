@@ -33,16 +33,11 @@ PrintWriter possible_recipes;
 
 void setup(){
   size(800,600);
-  chocolate_chip_cookie = new Recipe("chocolate chip cookie",0,0,0,0,250,300,0,1,100,loadImage("chocolate_cookies.png"));
-  cooked_sausages = new Recipe("cooked sausages",0,0,0,0,0,0,1,0,0,loadImage("cooked_sausages.png")); // create the recipe
+  chocolate_chip_cookie = new Recipe("chocolate chip cookie",0,0,0,0,250,300,0,1,100,loadImage("chocolate_cookies.png"), loadImage("chocolate_cookies_raw.png"));
+  cooked_sausages = new Recipe("cooked sausages",0,0,0,0,0,0,1,0,0,loadImage("cooked_sausages.png"), loadImage("sausages.png")); // create the recipe
   recipes.add(chocolate_chip_cookie);
   recipes.add(cooked_sausages);
-  oven = loadImage("openoven.png"); // load image
-  cooklo = loadImage("cooklogo.png");// load image
-  tray = loadImage("tray.png");
-  sausages = loadImage("sausages.png");
-  mixer = loadImage("mixer.png");
-  possible_recipes = createWriter("possible_recipes.txt");
+  load_images();// loads all images used in draw
   
   //music window
   songImage = loadImage("Cool Out Son Image.PNG");// load image
@@ -78,7 +73,6 @@ void draw(){
     //find scene 
     if (cur_instruction.substring(0,5).equals("oven ")){ // if we selected oven
       cooking_mode = true; // set the cooking _ mode to true
-      print("cool");
     }  
     else if ( cur_instruction.substring(0,5).equals("tray ")){
       add_mode = true;
@@ -112,6 +106,9 @@ void draw(){
     }
     if(cur_instruction.substring(5,10).equals("cook ")){ // if the instruction is set the timer
       target_time = int(cur_instruction.substring(14, cur_instruction.indexOf("min")-1)); // the user need to drag the knob ot change the time
+    }
+    if(cur_instruction.substring(5,10).equals("place")){
+      
     }
   }
   else if(add_mode){
@@ -245,4 +242,12 @@ public void start_button(GButton source, GEvent event){
   background(0);
   createGUI(); // call the create gui function in the gui tab
    
+}
+void load_images(){
+  oven = loadImage("openoven.png"); // load image
+  cooklo = loadImage("cooklogo.png");// load image
+  tray = loadImage("tray.png");
+  sausages = loadImage("sausages.png");
+  mixer = loadImage("mixer.png");
+  possible_recipes = createWriter("possible_recipes.txt");
 }
