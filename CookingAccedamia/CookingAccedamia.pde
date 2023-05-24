@@ -166,7 +166,7 @@ void draw(){
         if(starting_value){
           i.image_location.x = j * 100;
         }
-        image(i.image, i.image_location.x - width/10 + j * 100 , i.image_location.y - height/10, width/5, height/5);
+        image(i.image, i.image_location.x - width/10  , i.image_location.y - height/10, width/5, height/5);
         j++;
       }
       starting_value = false;

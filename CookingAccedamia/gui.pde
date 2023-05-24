@@ -202,7 +202,7 @@ public void createGUI(){
   recipe_options.addEventHandler(this, "possible_recipes");
   recipe_options.addItem("select recipe");
   recipe_options.setAlpha(0);
-  simulate_recipe = new GButton(Recipe, 600, 160, 80, 30, "simulate recipe");
+  simulate_recipe = new GButton(Recipe, 600, 160, 80, 30, "Simulate Recipe");
   simulate_recipe.setLocalColorScheme(GCScheme.GREEN_SCHEME);
   simulate_recipe.addEventHandler(this, "simulate_recipe");
   simulate_recipe.setAlpha(0);
@@ -210,12 +210,12 @@ public void createGUI(){
   dropLists.get(0).setItems(loadStrings("list_374668"), 0);
   dropLists.get(0).addEventHandler(this, "dropList1_click1");
   add_ingredient = new GButton(Recipe, 190, 300, 80, 30);
-  add_ingredient.setText("add ingredient");
+  add_ingredient.setText("Add Ingredient");
   add_ingredient.setLocalColorScheme(GCScheme.PURPLE_SCHEME);
   add_ingredient.addEventHandler(this, "button1_click1");
   generate_recipes = new GButton(Recipe, 500, 300, 80, 30);
   generate_recipes.setLocalColorScheme(GCScheme.YELLOW_SCHEME);
-  generate_recipes.setText("generate recipes");
+  generate_recipes.setText("Generate Recipes");
   generate_recipes.addEventHandler(this, "generating_recipes");
   ingredient_quantities.add(new GCustomSlider(Recipe, 120, 60, 100, 40, "grey_blue"));
   ingredient_quantities.get(0).setLimits(0.0, 0.0, 500.0);
