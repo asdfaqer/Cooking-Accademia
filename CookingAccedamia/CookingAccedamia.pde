@@ -269,6 +269,7 @@ void create_start_button(){
   image(cooklo,0,0,width,height);
   start_button = new GButton(this, width/2 - 150, height*3/4, 300, 100);
   start_button.setText("Start");
+  start_button.setLocalColorScheme(GCScheme.ORANGE_SCHEME);
   start_button.addEventHandler(this, "start_button");
   
   

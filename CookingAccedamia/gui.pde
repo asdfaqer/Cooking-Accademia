@@ -203,15 +203,18 @@ public void createGUI(){
   recipe_options.addItem("select recipe");
   recipe_options.setAlpha(0);
   simulate_recipe = new GButton(Recipe, 600, 160, 80, 30, "simulate recipe");
+  simulate_recipe.setLocalColorScheme(GCScheme.GREEN_SCHEME);
   simulate_recipe.addEventHandler(this, "simulate_recipe");
   simulate_recipe.setAlpha(0);
   dropLists.add(new GDropList(Recipe, 29, 60, 90, 80, 3, 20));
   dropLists.get(0).setItems(loadStrings("list_374668"), 0);
   dropLists.get(0).addEventHandler(this, "dropList1_click1");
   add_ingredient = new GButton(Recipe, 190, 300, 80, 30);
-  add_ingredient.setText("add ingerdient");
+  add_ingredient.setText("add ingredient");
+  add_ingredient.setLocalColorScheme(GCScheme.PURPLE_SCHEME);
   add_ingredient.addEventHandler(this, "button1_click1");
   generate_recipes = new GButton(Recipe, 500, 300, 80, 30);
+  generate_recipes.setLocalColorScheme(GCScheme.YELLOW_SCHEME);
   generate_recipes.setText("generate recipes");
   generate_recipes.addEventHandler(this, "generating_recipes");
   ingredient_quantities.add(new GCustomSlider(Recipe, 120, 60, 100, 40, "grey_blue"));
@@ -243,9 +246,11 @@ public void createGUI(){
   
   play_button_music = new GButton(Music, 50, 240, 80, 30);
   play_button_music.setText("play");
+  play_button_music.setLocalColorScheme(GCScheme.RED_SCHEME);
   play_button_music.addEventHandler(this, "play_music");
   pause_button_music = new GButton(Music, 175, 240, 80, 30);
   pause_button_music.setText("pause");
+  pause_button_music.setLocalColorScheme(GCScheme.RED_SCHEME);
   pause_button_music.addEventHandler(this, "pause_music");
   volume = new GCustomSlider(Music, 110, 215, 80, 30);
   
