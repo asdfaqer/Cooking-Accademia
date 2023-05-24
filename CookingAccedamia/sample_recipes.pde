@@ -86,6 +86,46 @@ public void set_ingredients_chocolate_chip_cookies(GButton source, GEvent event)
     quantities_label.get(t).setText(str(quantities_values.get(t))+" mL");
     Recipe.background(230);
   }  
+  t++;
+  try{
+    dropLists.get(t).setSelected(10);
+    dropLists.get(t).addEventHandler(this, "dropList1_click1");
+    ingredient_quantities.get(t).setLimits(300.0,0.0,500.0);
+    quantities_values.add(ingredient_quantities.get(t).getValueI());
+    quantities_label.get(t).setText(str(quantities_values.get(t))+ " g");
+    Recipe.background(230);
+  }catch(Exception e){
+    dropLists.add(new GDropList(Recipe, 29, 60 + 40* t, 90, 80, 3, 15));
+    dropLists.get(t).setItems(loadStrings("list_374668"), 10);
+    dropLists.get(t).addEventHandler(this, "dropList1_click1");
+    ingredient_quantities.add(new GCustomSlider(Recipe, 120, 60 + 40*t, 100, 40, "grey_blue"));
+    ingredient_quantities.get(t).setLimits(300.0,0.0,500.0);
+    ingredient_quantities.get(t).addEventHandler(this, "change_quantities");
+    quantities_label.add(new GLabel(Recipe, 120, 40 + 40*t, 100, 50));
+    quantities_values.add(ingredient_quantities.get(t).getValueI());
+    quantities_label.get(t).setText(str(quantities_values.get(t))+ " g");
+    Recipe.background(230);
+  }  
+  t++;
+  try{
+    dropLists.get(t).setSelected(11);
+    dropLists.get(t).addEventHandler(this, "dropList1_click1");
+    ingredient_quantities.get(t).setLimits(300.0,0.0,500.0);
+    quantities_values.add(ingredient_quantities.get(t).getValueI());
+    quantities_label.get(t).setText(str(quantities_values.get(t))+ " g");
+    Recipe.background(230);
+  }catch(Exception e){
+    dropLists.add(new GDropList(Recipe, 29, 60 + 40* t, 90, 80, 3, 15));
+    dropLists.get(t).setItems(loadStrings("list_374668"), 11);
+    dropLists.get(t).addEventHandler(this, "dropList1_click1");
+    ingredient_quantities.add(new GCustomSlider(Recipe, 120, 60 + 40*t, 100, 40, "grey_blue"));
+    ingredient_quantities.get(t).setLimits(300.0,0.0,500.0);
+    ingredient_quantities.get(t).addEventHandler(this, "change_quantities");
+    quantities_label.add(new GLabel(Recipe, 120, 40 + 40*t, 100, 50));
+    quantities_values.add(ingredient_quantities.get(t).getValueI());
+    quantities_label.get(t).setText(str(quantities_values.get(t))+ " g");
+    Recipe.background(230);
+  }  
   // hide extra ingredients
   for(int j = t+1; j<i+1; j++){
     dropLists.get(j).setAlpha(0);

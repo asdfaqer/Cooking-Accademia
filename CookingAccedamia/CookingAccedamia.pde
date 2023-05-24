@@ -40,8 +40,8 @@ void setup(){
   size(800,600);
   sausages_raw = new Recipe(loadImage("sausages.png"));
   chocolate_chip_cookies_raw = new Recipe(loadImage("raw_chocolate_cookies.png"));
-  chocolate_chip_cookies = new Recipe("chocolate chip cookies",0,0,0,0,250,300,0,1,100,loadImage("chocolate_cookies.png"), chocolate_chip_cookies_raw);
-  cooked_sausages = new Recipe("cooked sausages",0,0,0,0,0,0,1,0,0,loadImage("cooked_sausages.png"), sausages_raw); // create the recipe
+  chocolate_chip_cookies = new Recipe("chocolate chip cookies",0,0,0,0,250,300,0,1,100,300,300,loadImage("chocolate_cookies.png"), chocolate_chip_cookies_raw);
+  cooked_sausages = new Recipe("cooked sausages",0,0,0,0,0,0,1,0,0,0,0,loadImage("cooked_sausages.png"), sausages_raw); // create the recipe
   recipes.add(chocolate_chip_cookies);
   recipes.add(cooked_sausages);
   load_images();// loads all images used in draw
@@ -164,7 +164,7 @@ void draw(){
       j=0;
       for(Recipe i: current_requirement){
         if(starting_value){
-        i.image_location.x = j * 100;
+          i.image_location.x = j * 100;
         }
         image(i.image, i.image_location.x - width/10 + j * 100 , i.image_location.y - height/10, width/5, height/5);
         j++;

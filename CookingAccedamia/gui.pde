@@ -123,7 +123,7 @@ public void possible_recipes(GDropList source, GEvent event){
   }
   recipe_selected.setText("selected recipe" + text_selected);
   Recipe.background(230);
-  Recipe.image(cur_recipe.image,300,0,width/3,height/3);
+  Recipe.image(cur_recipe.image,300,100,width/3,height/3);
   instructions.clear();
 }
 
@@ -161,7 +161,7 @@ public void generating_recipes(GButton source, GEvent event){
   float max_value = 0;
   float cur_value;
   Recipe top_recipe = valid_recipes.get(0);//closest match to desired recipe
-  recipe_selected.setText("Recipe recommended" + top_recipe.label);
+  recipe_selected.setText("Recipe recommended: " + top_recipe.label);
   recipe_options.setAlpha(255);
   simulate_recipe.setAlpha(255);
   
@@ -174,7 +174,7 @@ public void generating_recipes(GButton source, GEvent event){
     }
   }
   //displays the top recipe
-  Recipe.image(top_recipe.image,300,0,width/3,height/3);
+  Recipe.image(top_recipe.image,300,100,width/3,height/3);
   recipe_options.removeItem(0);
   recipe_options.setSelected(valid_recipes.indexOf(top_recipe));
   if(!recipe_found){
@@ -223,7 +223,7 @@ public void createGUI(){
   ingredient_quantities.get(0).setOpaque(false);
   ingredient_quantities.get(0).addEventHandler(this, "change_quantities");
   quantities_label.add(new GLabel(Recipe, 120, 40, 100, 50, "N/A"));
-  recipe_selected = new GLabel(Recipe, 126, 222, 300, 100);
+  recipe_selected = new GLabel(Recipe, 150, 300, 300, 100);
   recipe_selected.setTextAlign(GAlign.CENTER, GAlign.MIDDLE);
   recipe_selected.setOpaque(false);
   label2 = new GLabel(Recipe, 27, 35, 300, 20);
