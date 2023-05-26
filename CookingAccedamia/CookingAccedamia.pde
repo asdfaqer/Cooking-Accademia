@@ -39,7 +39,7 @@ PrintWriter possible_recipes;
 void setup(){
   size(800,600);
   sausages_raw = new Recipe(loadImage("sausages.png"));
-  chocolate_chip_cookies_raw = new Recipe(loadImage("raw_chocolate_cookies.png"));
+  chocolate_chip_cookies_raw = new Recipe(loadImage("cookie_dough.png"));
   chocolate_chip_cookies = new Recipe("chocolate chip cookies",0,0,0,0,250,300,0,1,100,300,300,loadImage("chocolate_cookies.png"), chocolate_chip_cookies_raw);
   cooked_sausages = new Recipe("cooked sausages",0,0,0,0,0,0,1,0,0,0,0,loadImage("cooked_sausages.png"), sausages_raw); // create the recipe
   recipes.add(chocolate_chip_cookies);
@@ -252,9 +252,9 @@ void mixer_state_change(GButton source, GEvent event){
   num_pressed++;
   mixer_state = !mixer_state;//true  = on, false = off
   if(mixer_state){
-    mixer_on_off.setText("ON");
+    mixer_on_off.setText("OFF");
   }else{
-  mixer_on_off.setText("OFF");
+  mixer_on_off.setText("ON");
   }
   println(num_pressed);
   if(num_pressed == 2){
