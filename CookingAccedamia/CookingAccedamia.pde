@@ -54,6 +54,7 @@ void setup(){
   
   create_start_button(); // call this function to make button in the bottom of the screen
    
+  set_up_instructions();//create label to display instructions
   set_up_task_recipe_completion();
 
 }
@@ -186,6 +187,13 @@ void set_up_task_recipe_completion(){
   task_recipe_completion.setOpaque(false);
   task_recipe_completion.setLocalColorScheme(GCScheme.YELLOW_SCHEME);
 }
+void set_up_instructions(){
+  cur_instruction_label = new GLabel(this, width-300, 50, 300, 100);
+  cur_instruction_label.setTextAlign(GAlign.CENTER, GAlign.MIDDLE);
+  cur_instruction_label.setOpaque(false);
+  cur_instruction_label.setFont(new Font("Monospaced", Font.PLAIN, 30));
+  cur_instruction_label.setLocalColorScheme(GCScheme.YELLOW_SCHEME);
+}
 // setup the scene and gui of the screen
 void set_up_scene(){
   if(cooking_mode){
@@ -198,7 +206,7 @@ void set_up_scene(){
     Temp.setIncludeOverBezel(false);
     Temp.setShowTrack(true);
     Temp.setTurnMode(GKnob.CTRL_ANGULAR);
-    Temp.setLimits(0.0, 0.0, 300.0);
+    Temp.setLimits(0.0, 0.0, 400.0);
     Temp.setShowTicks(true);
     Temp.setOpaque(false);
     Temp.addEventHandler(this, "changeoventemp");
@@ -235,11 +243,9 @@ void set_up_scene(){
     timer.setText("0 min");
     timer.setLocalColorScheme(GCScheme.YELLOW_SCHEME);
     timer.setOpaque(false);
-    cur_instruction_label = new GLabel(this, width-300, 50, 300, 100);
-    cur_instruction_label.setTextAlign(GAlign.CENTER, GAlign.MIDDLE);
-    cur_instruction_label.setOpaque(false);
-    cur_instruction_label.setFont(new Font("Monospaced", Font.PLAIN, 30));
-    cur_instruction_label.setLocalColorScheme(GCScheme.YELLOW_SCHEME);
+    try{
+      mixer_on_off.setAlpha(0);//stop displaying any unnessary objects
+    }catch(Exception e){}
   }
   if(mix_mode){
     mixer_on_off = new GButton(this,575,350,80,30);

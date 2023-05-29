@@ -18,7 +18,8 @@ int step_num = 0;
  //_CODE_:time:476537:
 public void recipe_complete(){
   background(0);
-  task_recipe_completion.setText("RECIPE COMPLETED");
+  image(cur_recipe.image,0,0,width,height);
+  task_recipe_completion.setText("RECIPE COMPLETED\n to try a new recipe re-run the program");
 }
 public void task_complete(){
   background(0);
